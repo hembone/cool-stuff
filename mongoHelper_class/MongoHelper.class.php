@@ -1,12 +1,6 @@
 <?php
 class mongoHelper {
 
-/*
-	The first parameter in most of these functions is the name of the collection that
-you want to access.  Second one is probaby the query parameters you want to use, this 
-should be in the form of an array/nested array of some sort depending on what you are 
-trying to find/update/insert.
-*/
     function __construct() {
         $dbhost = MONGO_DBHOST;
         $dbname = MONGO_DBNAME;
