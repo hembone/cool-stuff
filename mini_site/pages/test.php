@@ -1,7 +1,4 @@
-<?php
-$title = 'Test';
-require('layouts/header.php');
-?>
+<script>document.title = 'MySQL Test';</script>
 
 <div class="row">
 	<div class="small-12 columns">
@@ -13,8 +10,3 @@ require('layouts/header.php');
 		</form>
 	</div>
 </div>
-
-
-<?php
-require('layouts/footer.php');
-?>

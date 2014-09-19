@@ -6,5 +6,11 @@ if(isset($_GET['page']) && $_GET['page']!='') {
 } else {
 	$page = 'home';
 }
-require('pages/'.$page.'.php');
+$the_page = 'pages/'.$page.'.php';
+require('layouts/top.php');
+require('layouts/header.php');
+require('layouts/nav.php');
+require($the_page);
+require('layouts/footer.php');
+require('layouts/bottom.php');
 ?>
