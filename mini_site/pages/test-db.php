@@ -1,9 +1,9 @@
 <?php
 $title = $_SERVER['HTTP_HOST'].' | MySQL Test';
 $body_class = '';
-require('layouts/top.php');
-require('layouts/header.php');
-require('layouts/nav.php');
+require('includes/top.php');
+require('includes/header.php');
+require('includes/nav.php');
 ?>
 
 <?php
@@ -31,7 +31,7 @@ if(isset($_POST['name']) && isset($_POST['color'])) {
 
 
 <?php
-require('layouts/footer.php');
-require('layouts/scripts.php');
-require('layouts/bottom.php');
+require('includes/footer.php');
+require('includes/scripts.php');
+require('includes/bottom.php');
 ?>
