@@ -10,40 +10,21 @@ if(!isset($_GET['ajax'])) {
 ?>
 
 <form id="login_form" method="post" action="/">
-	<input name="email" type="text" placeholder="Email"/>
-	<input name="password" type="password" placeholder="Password"/>
-	<a href="/forgot-password">Forgot Password?</a>
-	<input id="remember" name="remember" type="checkbox" value="1"/> Remember Me
+
+	<div><input name="email" type="text" placeholder="Email"/></div>
+	<div><input name="password" type="password" placeholder="Password"/></div>
+	<div><a href="/forgot-password">Forgot Password?</a></div>
+	<div><input id="remember" name="remember" type="checkbox" value="1"/> Remember Me</div>
+
 	<button type="submit">Login</button>
+	<div class="error-message"></div>
+
 </form>
 
 <?php
 if(!isset($_GET['ajax'])) {
 	require('includes/footer.php');
 	require('includes/scripts.php');
-?>
-<script type="text/javascript">
-$(function() {
-	$('#login_form').on('submit', function(e) {
-		e.preventDefault();
-		$.ajax({
-			method: "POST"
-			,url: "/api"
-			,data: { action: "login", data: $(this).serializeArray() }
-			,dataType: "json"
-		})
-		.done(function(res) {
-			console.log(res);
-			if(res.success) {
-				
-			} else {
-				
-			}
-		});
-	});
-});
-</script>
-<?php
 	require('includes/bottom.php');
 }
 ?>

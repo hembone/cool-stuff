@@ -1,5 +1,5 @@
 -- phpMiniAdmin dump 1.9.150108
--- Datetime: 2015-05-14 20:26:08
+-- Datetime: 2015-05-15 16:26:58
 -- Host: 
 -- Database: blank_db
 
@@ -32,8 +32,6 @@ CREATE TABLE `users` (
   `phone` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `zip` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `dob` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `emailOptin` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `smsOptin` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cookie_id_UNIQUE` (`cookieId`),
   UNIQUE KEY `email_UNIQUE` (`email`),

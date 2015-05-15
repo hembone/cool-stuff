@@ -14,7 +14,7 @@ if(!isset($_GET['ajax'])) {
 				<h5>Forgot password?</h5>
 				<br/><br/><br/>
 <form id="forgot_form" method="post" action="/">
-	<input type="text" name="email" placeholder="Email" value="<?php echo (isset($_SESSION['user_data']['email'])?$_SESSION['user_data']['email']:''); ?>"/>
+	<input type="text" name="email" placeholder="Email" value="<?php echo (isset($_SESSION[APP_KEY]['email'])?$_SESSION[APP_KEY]['email']:''); ?>"/>
 	<br/><br/><br/>
 	<div class="buttoncontainer overlaybutton middle">
 		<button type="submit">Send<span class="icon-arrowR4 ico-after"></span></button>

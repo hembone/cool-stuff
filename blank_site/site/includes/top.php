@@ -24,7 +24,7 @@
 <meta name="twitter:description" content="<?php echo (isset($og_description)?$og_description:''); ?>">
 <meta name="twitter:image" content="<?php echo (isset($og_image)?'http://'.$_SERVER['HTTP_HOST'].$og_image:'http://'.$_SERVER['HTTP_HOST'].'/img/share.jpg'); ?>">
 
-<base href="/" >
+<base href="/">
 
 <link rel="stylesheet" href="/css/fonts.css" />
 <link rel="stylesheet" href="/css/normalize.css" />

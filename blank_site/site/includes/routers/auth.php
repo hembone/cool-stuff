@@ -1,9 +1,10 @@
 <?php
-//unset($_SESSION['user_data']);
+//unset($_SESSION[APP_KEY]);
 
 // Options
 $exceptions = array(
 	'404'
+	,'api'
 	,'login'
 	,'create-profile'
 	,'forgot-password'
@@ -46,7 +47,7 @@ if(!in_array($page, $exceptions)) {
 	}
 
 	// Check for Session
-	if(isset($_SESSION['user_data'])) {
+	if(isset($_SESSION[APP_KEY])) {
 		$goto_login = false;
 	}
 

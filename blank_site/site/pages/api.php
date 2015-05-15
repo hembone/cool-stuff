@@ -12,19 +12,17 @@ if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['REQUEST_METHOD']==="POS
 			if(!$AUTH->isLoggedIn()) {
 				$form_data = format_data($_POST['data']);
 				$user = $AUTH->getUserByEmail($form_data['email']);
-				$results = null;
-				
+				$results = NULL;
 				if(!$user['id']) {
 					$results = $AUTH->addUser($form_data);
 					if($results['error']){
-						exit( json_encode(array('success'=>false, 'error'=>'Unable to create profile')) );
+						exit( json_encode(array('success'=>false, 'error'=>$results['error'][2])) );
 					}
 					$user = $AUTH->getUserByEmail($form_data['email']);
 					$AUTH->setSession($user);
 				} else {
 					exit( json_encode(array('success'=>false, 'message'=>'A profile exists with that email')) );
 				}
-
 				exit( json_encode(array('success'=>true, 'results'=>$results)) );
 			} else {
 				exit( json_encode(array('success'=>false, 'message'=>'Please log out to create new profile')) );

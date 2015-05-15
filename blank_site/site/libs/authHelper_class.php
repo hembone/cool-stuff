@@ -7,7 +7,7 @@ class authHelper {
 	}
 
 	public function isLoggedIn() {
-		if(isset($_SESSION['user_data'])) {
+		if(isset($_SESSION[APP_KEY])) {
 			return true;
 		} else {
 			return false;
@@ -50,7 +50,7 @@ class authHelper {
 
 	public function getUserByEmail($email=false) {
 		if($email) {
-			$sql = "SELECT u.id, firstName, lastName, email, count(up.id) as totalPhotos, sum(up.votes) as totalVotes FROM users u, user_photos up WHERE email=:email and u.id = up.userId and up.approved=1";
+			$sql = "SELECT id, firstName, lastName, email FROM users WHERE email=:email";
 			$params = array(
 				array(':email', $email)
 			);
@@ -67,7 +67,7 @@ class authHelper {
 
 	public function setSession($user=false) {
 		if($user) {
-			$_SESSION['user_data'] = array(
+			$_SESSION[APP_KEY] = array(
 				'id' => $user['id']
 				,'fname' => $user['firstName']
 				,'lname' => $user['lastName']
@@ -96,7 +96,7 @@ class authHelper {
 
 	public function addUser($data=false) {
 		if($data) {
-			$sql = "INSERT INTO users (password, firstName, lastName, email, phone, zip, dob, emailOptin, smsOptin) VALUES (:password, :firstName, :lastName, :email, :phone, :zip, :dob, :emailOptin, :smsOptin)";
+			$sql = "INSERT INTO users (password, firstName, lastName, email, phone, zip, dob) VALUES (:password, :firstName, :lastName, :email, :phone, :zip, :dob)";
 			$params = array(
 				array(':password', hash('sha256', $data['password'].APP_KEY))
 				,array(':firstName', $data['fname'])
@@ -105,8 +105,6 @@ class authHelper {
 				,array(':phone', $data['phone'])
 				,array(':zip', $data['zip'])
 				,array(':dob', $data['dob'])
-				,array(':emailOptin', (isset($data['emailOptin'])?1:0))
-				,array(':smsOptin', (isset($data['smsOptin'])?1:0))
 			);
 			$result = $this->DB->query($this->conn, $sql, $params);
 			return $result;
@@ -203,7 +201,7 @@ class authHelper {
 
 	public function logOut() {
 		setcookie('cookie_id', '', time()-3600);
-		unset($_SESSION['user_data']);
+		unset($_SESSION[APP_KEY]);
 		return true;
 	}
 
