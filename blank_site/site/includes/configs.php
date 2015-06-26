@@ -25,6 +25,11 @@ switch($_SERVER['HTTP_HOST']) {
 		define("MYSQL_NAME", "blank_db");
 		define("MYSQL_USER", "root");
 		define("MYSQL_PASS", "root");
+
+		define("MYSQL_HOST2", "localhost");
+		define("MYSQL_NAME2", "swarm_db");
+		define("MYSQL_USER2", "root");
+		define("MYSQL_PASS2", "root");
 		break;
 
 	default:

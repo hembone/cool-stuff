@@ -6,11 +6,25 @@ class mysqlHelper {
 		$this->dbname = MYSQL_NAME;
 		$this->dbuser = MYSQL_USER;
 		$this->dbpass = MYSQL_PASS;
+
+		$this->dbhost2 = MYSQL_HOST2;
+		$this->dbname2 = MYSQL_NAME2;
+		$this->dbuser2 = MYSQL_USER2;
+		$this->dbpass2 = MYSQL_PASS2;
     }
 
     public function connect() {
 		try {
 			return new PDO('mysql:host='.$this->dbhost.';dbname='.$this->dbname, $this->dbuser, $this->dbpass);
+		} catch (PDOException $e) {
+			return false;
+			//return 'Connection failed: ' . $e->getMessage();
+		}
+    }
+
+    public function connect2() {
+		try {
+			return new PDO('mysql:host='.$this->dbhost2.';dbname='.$this->dbname2, $this->dbuser2, $this->dbpass2);
 		} catch (PDOException $e) {
 			return false;
 			//return 'Connection failed: ' . $e->getMessage();
