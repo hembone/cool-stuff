@@ -4,6 +4,7 @@ class theFramework {
 	function __construct() {
 		$this->bodyClasses = array();
 		$this->template = 'default';
+		$this->apiKey = '1';
 	}
 
 	public function init() {
@@ -23,7 +24,19 @@ class theFramework {
 	}
 
 	private function getTemplate() {
-		include 'templates/'.$this->template.'.php';
+		if($this->isApi()) {
+			$this->printContent();
+		} else {
+			include 'templates/'.$this->template.'.php';
+		}
+	}
+
+	private function isApi() {
+		if((isset($_GET['api']) && $_GET['api']==$this->apiKey) || (isset($_POST['api']) && $_POST['api']==$this->apiKey)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function useTemplate($template='') {

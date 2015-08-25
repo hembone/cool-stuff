@@ -1,5 +1,5 @@
 <?php $this->title='New Framework'; ?>
-<?php $this->addBodyClass('booty'); ?>
+<?php $this->addBodyClass(['booty','pimpin']); ?>
 
 
-Home Page boom!
+Home Page
