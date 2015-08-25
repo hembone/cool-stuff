@@ -18,8 +18,13 @@ class theFramework {
 			$get_page = explode('.', $_GET['page']);
 			$this->page = $get_page[0];
 		}
+		$filePath = 'pages/'.$this->page.'.php';
+		if(!file_exists($filePath)) {
+			$this->page = '404';
+			$filePath = 'pages/404.php';
+		}
 		ob_start();
-		include 'pages/'.$this->page.'.php';
+		include $filePath;
 		$this->pageOutput = ob_get_clean();
 	}
 
