@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 // Define Globals
 $protocol = (strpos($_SERVER['SERVER_PROTOCOL'],'https')?'https://':'http://');
@@ -6,7 +7,7 @@ define("BASE_URL", $protocol.$_SERVER['HTTP_HOST']);
 
 // Environment Globals
 switch($_SERVER['HTTP_HOST']) {
-	case "jasonhemmy.dev":
+	case "mini-site.dev":
 		define("ENV", "dev");
 		define("DEBUG_MODE", true);
 		break;
@@ -24,7 +25,8 @@ if(DEBUG_MODE) {
 	ini_set('display_errors', '0');
 }
 
-// MySQL Helper
 require_once 'libs/theFramework_class.php';
+$TFW = new theFramework();
+$TFW->init();
 
 ?>

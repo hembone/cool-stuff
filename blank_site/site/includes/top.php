@@ -44,7 +44,7 @@ ga('send', 'pageview');
 </script>
 
 </head>
-<body lang="en" class="<?php echo $body_class; ?>">
+<body lang="en" class="<?php $TFW->printBodyClasses(); ?>">
 
 <?php //echo'<pre>GET: '.print_r($_GET,true).'</pre>'; ?>
 <?php //echo'<pre>POST: '.print_r($_POST,true).'</pre>'; ?>
