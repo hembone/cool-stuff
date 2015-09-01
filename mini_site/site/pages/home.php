@@ -1,3 +1,3 @@
-<?php $this->title='New Framework'; ?>
+<?php $this->title='Home'; ?>
 
 Home Page

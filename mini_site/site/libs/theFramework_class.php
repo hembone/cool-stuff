@@ -4,7 +4,6 @@ class theFramework {
 	function __construct() {
 		$this->bodyClasses = array();
 		$this->template = 'default';
-		$this->apiKey = '1';
 	}
 
 	public function init() {
@@ -37,7 +36,7 @@ class theFramework {
 	}
 
 	private function isApi() {
-		if((isset($_GET['api']) && $_GET['api']==$this->apiKey) || (isset($_POST['api']) && $_POST['api']==$this->apiKey)) {
+		if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
 			return true;
 		} else {
 			return false;

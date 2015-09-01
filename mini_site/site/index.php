@@ -1,3 +1,1 @@
-<?php
-require_once('includes/configs.php');
-?>
+<?php require_once('includes/configs.php'); ?>
