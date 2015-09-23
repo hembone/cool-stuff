@@ -50,5 +50,4 @@ if(USE_DB) {
 require_once 'libs/theFramework_class.php';
 $TFW = new theFramework();
 $TFW->init();
-
 ?>
