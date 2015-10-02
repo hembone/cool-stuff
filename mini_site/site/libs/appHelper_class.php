@@ -1,5 +1,4 @@
 <?php
-
 class appHelper {
 
 	function __construct() {
@@ -15,6 +14,10 @@ class appHelper {
 			,array(':timestamp', date("Y-m-d H:i:s"))
 		);
 		$this->DB->query($this->conn, $sql, $params);
+    }
+
+	public function writeLog($data) {
+
     }
 
 }
