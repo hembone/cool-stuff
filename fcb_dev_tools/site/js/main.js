@@ -5,6 +5,7 @@ $(document).ready(function() {
 			init : function() {
 				if($('body').hasClass('home')){APP.home.init();}
 				if($('body').hasClass('email-builder')){APP.emailBuilder.init();}
+				if($('body').hasClass('email-manage')){APP.emailManage.init();}
 				if($('body').hasClass('banner-tester')){APP.bannerTester.init();}
 				if($('body').hasClass('social-ranking')){APP.socialRanking.init();}
 			},
@@ -32,6 +33,15 @@ $(document).ready(function() {
 		emailBuilder : {
 			init : function() {
 
+			}
+		},
+
+		emailManage : {
+			init : function() {
+				$('#manage-tabs a').click(function(e) {
+					e.preventDefault();
+					$(this).tab('show');
+				});
 			}
 		},
 

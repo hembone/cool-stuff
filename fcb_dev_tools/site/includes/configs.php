@@ -3,21 +3,21 @@ session_start();
 date_default_timezone_set('America/Chicago');
 
 // Define Globals
-define("USE_DB", false);
+define("USE_DB", true);
 $protocol = (strpos($_SERVER['SERVER_PROTOCOL'],'https')?'https://':'http://');
 define("BASE_URL", $protocol.$_SERVER['HTTP_HOST']);
 define("API_KEY", "1");
 
 // Environment Globals
 switch($_SERVER['HTTP_HOST']) {
-	case "mini-site.dev":
+	case "fcb-dev-tools.dev":
 		define("ENV", "dev");
 		define("DEBUG_MODE", true);
 		if(USE_DB) {
-			define("MYSQL_HOST", "");
-			define("MYSQL_NAME", "");
-			define("MYSQL_USER", "");
-			define("MYSQL_PASS", "");
+			define("MYSQL_HOST", "localhost");
+			define("MYSQL_NAME", "fcb_tools_db");
+			define("MYSQL_USER", "root");
+			define("MYSQL_PASS", "root");
 		}
 		break;
 	default:
