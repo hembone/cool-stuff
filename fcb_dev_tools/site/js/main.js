@@ -6,6 +6,7 @@ $(document).ready(function() {
 				if($('body').hasClass('home')){APP.home.init();}
 				if($('body').hasClass('email-builder')){APP.emailBuilder.init();}
 				if($('body').hasClass('banner-tester')){APP.bannerTester.init();}
+				if($('body').hasClass('social-ranking')){APP.socialRanking.init();}
 			},
 			sendToApi : function(action, data, callback) {
 				$.ajax({
@@ -111,6 +112,26 @@ $(document).ready(function() {
 			    html += '</div>';
 			    html += '</div>';
 			    $('#insert-iframes').append(html);
+			}
+		},
+
+		socialRanking : {
+			init : function() {
+				$('#search-form').on('submit', function(e) {
+					e.preventDefault();
+					var data = $('#search-form').serializeArray();
+					APP.global.sendToApi('search-twitter', data, APP.socialRanking.searchTwitterCallback);
+				});
+			},
+			searchTwitterCallback : function(res) {
+				//console.log(res.result);
+				var html = '';
+				$.each(res.result.data, function(index, value) {
+					//console.log(value.text);
+					html += '<p>'+value.text+'</p>';
+				});
+				$('#tweets').html(html);
+				$('#hits').html(res.result.total);
 			}
 		}
 

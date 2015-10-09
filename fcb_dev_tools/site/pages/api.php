@@ -17,6 +17,15 @@ if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
 				exit(json_encode(array('success'=>false)));
 			}
 			break;
+		case 'search-twitter':
+			$APP = new appHelper();
+			$result = $APP->searchTwitter(format_data($_REQUEST['data']));
+			if($result) {
+				exit(json_encode(array('success'=>true, 'result'=>$result)));
+			} else {
+				exit(json_encode(array('success'=>false)));
+			}
+			break;
 	}
 } else {
 	exit( json_encode(array('success'=>false, 'message'=>'this action is not supported')) );
