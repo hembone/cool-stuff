@@ -38,7 +38,10 @@ $(document).ready(function() {
 
 		emailManage : {
 			init : function() {
-				$('#manage-tabs a').click(function(e) {
+				APP.emailManage.setListeners();
+			},
+			setListeners : function() {
+				$(document).on('click', '#manage-tabs a', function(e) {
 					e.preventDefault();
 					$(this).tab('show');
 				});
