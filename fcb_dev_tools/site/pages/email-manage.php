@@ -31,7 +31,7 @@
             <div class="row">
                 <div class="col-sm-9"></div>
                 <div class="col-sm-3">
-                    <form method="post" action="">
+                    <form id="new-category" method="post" action="">
                 		<div class="form-group">
                 			<input class="form-control" type="text" name="name" placeholder="Category Name...">
                 		</div>

@@ -45,6 +45,14 @@ $(document).ready(function() {
 					e.preventDefault();
 					$(this).tab('show');
 				});
+				$(document).on('submit', '#new-category', function(e) {
+					e.preventDefault();
+					var data = $(this).serializeArray();
+					APP.global.sendToApi('new-category', data, APP.emailManage.newCategoryCallback);
+				});
+			},
+			newCategoryCallback : function(res) {
+				console.log(res);
 			}
 		},
 
