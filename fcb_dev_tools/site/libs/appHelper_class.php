@@ -8,6 +8,10 @@ class appHelper {
 		}
     }
 
+	public function getLorem() {
+
+    }
+
     public function sendLog($data) {
 		$sql = "INSERT INTO Logs (type, message, timestamp) VALUES (:type, :message, :timestamp)";
 		$params = array(

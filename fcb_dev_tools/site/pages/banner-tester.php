@@ -1,25 +1,4 @@
-<!doctype html>
-<!--[if lt IE 9]><html class="ie"><![endif]-->
-<!--[if gte IE 9]><!--><html><!--<![endif]-->
-<head>
-<meta charset="utf-8">
-<title></title>
-
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="description" content="">
-<meta name="keywords" content="">
-
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="banner_test.css"/>
-
-<!--[if lt IE 9]>
-<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-</head>
-<body lang="en">
+<?php $this->title='Banner Tester'; ?>
 
 <div id="settings-overlay">
     <button id="close-settings" class="btn btn-primary"><i class="fa fa-check"></i> OK</button>
@@ -55,9 +34,3 @@
         <div id="insert-iframes" class="col-sm-12"></div>
     </div>
 </div>
-
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="banner_test.js"></script>
-</body>
-</html>
