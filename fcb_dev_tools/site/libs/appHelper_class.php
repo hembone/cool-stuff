@@ -9,7 +9,9 @@ class appHelper {
     }
 
 	public function getLorem() {
-
+		$lorem_url = 'http://loripsum.net/api/'.rand(2,4).'/medium';
+		$html = file_get_contents($lorem_url);
+		return $html;
     }
 
     public function sendLog($data) {

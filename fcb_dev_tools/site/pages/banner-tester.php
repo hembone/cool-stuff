@@ -1,7 +1,10 @@
 <?php $this->title='Banner Tester'; ?>
 
 <div id="settings-overlay">
-    <button id="close-settings" class="btn btn-primary"><i class="fa fa-check"></i> OK</button>
+    <div class="banner-nav">
+        <button id="close-settings" class="btn btn-primary"><i class="fa fa-check"></i> OK</button>
+        <div class="clearfix"></div>
+    </div>
     <div class="container">
         <form id="banner-form" class="form-horizontal">
             <div class="form-group">
@@ -22,12 +25,16 @@
                 </div>
             </div>
         </form>
-        <button id="add-field" class="btn btn-success btn-block btn-lg pull-right"><i class="fa fa-plus"></i> Add</button>
+        <button id="add-field" class="btn btn-success btn-block btn-lg"><i class="fa fa-plus"></i> Add</button>
     </div>
 </div>
 
-<button id="settings" class="btn btn-default"><i class="fa fa-cog"></i> Settings</button>
-<button id="refresh" class="btn btn-default"><i class="fa fa-refresh"></i> Refresh</button>
+<div class="banner-nav">
+    <button id="settings" class="btn btn-default"><i class="fa fa-cog"></i> Settings</button>
+    <button id="shuffle" class="btn btn-default"><i class="fa fa-random"></i> Shuffle</button>
+    <button id="refresh" class="btn btn-default"><i class="fa fa-refresh"></i> Refresh</button>
+    <div class="clearfix"></div>
+</div>
 
 <div class="container">
     <div class="row">

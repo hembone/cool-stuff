@@ -12,7 +12,7 @@ if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
 			$APP = new appHelper();
 			$result = $APP->getLorem();
 			if($result) {
-				exit(json_encode(array('success'=>true, 'result'=>$result)));
+				exit(json_encode(array('success'=>true, 'w'=>$_POST['data']['w'], 'h'=>$_POST['data']['h'], 'url'=>$_POST['data']['url'], 'lorem'=>$result)));
 			} else {
 				exit(json_encode(array('success'=>false)));
 			}

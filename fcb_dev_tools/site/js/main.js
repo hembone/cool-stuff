@@ -1,21 +1,18 @@
 $(document).ready(function() {
-	window.APP = {
+	var APP = {
 
 		global : {
 			init : function() {
-				if($('body').hasClass('home'))
-					APP.home.init();
-				if($('body').hasClass('email-builder'))
-					APP.emailBuilder.init();
-				if($('body').hasClass('banner-tester'))
-					APP.bannerTester.init();
+				if($('body').hasClass('home')){APP.home.init();}
+				if($('body').hasClass('email-builder')){APP.emailBuilder.init();}
+				if($('body').hasClass('banner-tester')){APP.bannerTester.init();}
 			},
 			sendToApi : function(action, data, callback) {
 				$.ajax({
-					method: "POST"
-					,url: "/api"
-					,dataType: "json"
-					,data: { key: '1', action: action, data: data }
+					method: "POST",
+					url: "/api",
+					dataType: "json",
+					data: { key: '1', action: action, data: data }
 				})
 				.success(function(res) {
 					if(typeof callback==='function') {
@@ -48,6 +45,9 @@ $(document).ready(function() {
 	            $(document).on('click', '#close-settings', function() {
 	                APP.bannerTester.buildIframes();
 	                $('#settings-overlay').fadeOut();
+	            });
+				$(document).on('click', '#shuffle', function() {
+	                APP.bannerTester.buildIframes();
 	            });
 	            $(document).on('click', '#refresh', function() {
 	                $('iframe').each(function(idx, el) {
@@ -88,37 +88,29 @@ $(document).ready(function() {
 	            html += '</div>';
 	            $('#banner-form').append(html);
 	        },
-	        buildIframes : function() {
-	            $('#insert-iframes').html('');
-	            $("#banner-form input[type=text]").each(function() {
-	                if(this.value!='') {
-	                    var html = '';
-	                    var dims = this.name.split('x');
-	                    var w = dims[0];
-	                    var h = dims[1];
-	                    var url = this.value;
-	                    html += '<div class="row">';
-	                    html += '<div class="col-sm-12">';
-
-	                        html += '<iframe width="'+w+'" height="'+h+'" src="'+url+'"></iframe>';
-	                        //html += APP.bannerTester.getText();
-	                    html += '</div>';
-	                    html += '</div>';
-	                    $('#insert-iframes').append(html);
-	                }
-	            });
-				APP.bannerTester.getText();
-	        },
-	        getText : function() {
-				APP.global.sendToApi('get-lorem', '', APP.bannerTester.getLoremCallback);
-	            // var text = '';
-	            // text += "<p>Scisse enim te quis coarguere possit? Nam Pyrrho, Aristo, Erillus iam diu abiecti. Bona autem corporis huic sunt, quod posterius posui, similiora. An ea, quae per vinitorem antea consequebatur, per se ipsa curabit? Respondent extrema primis, media utrisque, omnia omnibus. Quae hic rei publicae vulnera inponebat, eadem ille sanabat. At ille non pertimuit saneque fidenter: Istis quidem ipsis verbis, inquit; Gerendus est mos, modo recte sentiat. </p>";
-	            // text += "<p>Etenim semper illud extra est, quod arte comprehenditur. At enim hic etiam dolore. Itaque hic ipse iam pridem est reiectus; Omnes enim iucundum motum, quo sensus hilaretur. At ille pellit, qui permulcet sensum voluptate. Conferam tecum, quam cuique verso rem subicias; Omnia contraria, quos etiam insanos esse vultis. Quae in controversiam veniunt, de iis, si placet, disseramus. Eam stabilem appellas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. </p>";
-	            // text += "<p>Tollenda est atque extrahenda radicitus. Et ais, si una littera commota sit, fore tota ut labet disciplina. Quo plebiscito decreta a senatu est consuli quaestio Cn. Ex quo, id quod omnes expetunt, beate vivendi ratio inveniri et comparari potest. Huius, Lyco, oratione locuples, rebus ipsis ielunior. Vide, quaeso, rectumne sit. Nunc haec primum fortasse audientis servire debemus. At multis se probavit. Quid igitur dubitamus in tota eius natura quaerere quid sit effectum? Ut in voluptate sit, qui epuletur, in dolore, qui torqueatur. </p>";
-	            // return text;
-	        },
+			buildIframes : function() {
+			    $('#insert-iframes').html('');
+			    $("#banner-form input[type=text]").each(function() {
+			        if(this.value!=='') {
+			            var dims = this.name.split('x');
+			            var w = dims[0];
+			            var h = dims[1];
+			            var url = this.value;
+			            APP.global.sendToApi('get-lorem', {w:w, h:h, url:url}, APP.bannerTester.getLoremCallback);
+			        }
+			    });
+			},
 			getLoremCallback : function(res) {
-				console.log(res);
+			    var html = '';
+			    html += '<div class="row">';
+			    html += '<div class="col-sm-12">';
+					var float = 'pull-left';
+					if(Math.random() >= 0.5){float = 'pull-right';}
+			        html += '<iframe class="'+float+'" width="'+res.w+'" height="'+res.h+'" src="'+res.url+'"></iframe>';
+			        html += res.lorem;
+			    html += '</div>';
+			    html += '</div>';
+			    $('#insert-iframes').append(html);
 			}
 		}
 
