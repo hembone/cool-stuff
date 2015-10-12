@@ -47,8 +47,10 @@ $(document).ready(function() {
 				});
 				$(document).on('submit', '#new-category', function(e) {
 					e.preventDefault();
-					var data = $(this).serializeArray();
-					APP.global.sendToApi('new-category', data, APP.emailManage.newCategoryCallback);
+					if($(this).val()!=='') {
+						var data = $(this).serializeArray();
+						APP.global.sendToApi('new-category', data, APP.emailManage.newCategoryCallback);
+					}
 				});
 			},
 			newCategoryCallback : function(res) {
