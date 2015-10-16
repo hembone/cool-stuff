@@ -39,6 +39,62 @@ $nav-height: 56px;
     #manage-tabs {
         margin-bottom: 10px;
     }
+    .category_box {
+    	padding: 6px 10px;
+    	font-size: 1.1em;
+    	border: 1px solid #eee;
+    	margin-bottom: 8px;
+    	border-radius: 4px;
+    	-webkit-transition: all 500ms ease;
+    	-moz-transition: all 500ms ease;
+    	-ms-transition: all 500ms ease;
+    	-o-transition: all 500ms ease;
+    	transition: all 500ms ease;
+        span {
+        	position: relative;
+        	top: 4px;
+        }
+        .category_controls {
+        	float: right;
+            .btn {
+                margin-left: 6px;
+            }
+        }
+        &:hover {
+        	background: #eee;
+        }
+        form .btn {
+            margin-left: 6px;
+        }
+    }
+    .client_box {
+    	padding: 6px 10px;
+    	font-size: 1.1em;
+    	border: 1px solid #eee;
+    	margin-bottom: 8px;
+    	border-radius: 4px;
+    	-webkit-transition: all 500ms ease;
+    	-moz-transition: all 500ms ease;
+    	-ms-transition: all 500ms ease;
+    	-o-transition: all 500ms ease;
+    	transition: all 500ms ease;
+        span {
+        	position: relative;
+        	top: 4px;
+        }
+        .client_controls {
+        	float: right;
+            .btn {
+                margin-left: 6px;
+            }
+        }
+        &:hover {
+        	background: #eee;
+        }
+        form .btn {
+            margin-left: 6px;
+        }
+    }
 }
 
 /*////////////////////////////

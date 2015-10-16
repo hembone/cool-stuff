@@ -49,11 +49,13 @@
 
         <div class="tab-pane" id="clients">
             <div class="row">
-                <div class="col-sm-9"></div>
+                <div class="col-sm-9">
+                    <div id="insert-clients"></div>
+                </div>
                 <div class="col-sm-3">
-                    <form method="post" action="">
+                    <form  id="new-client" method="post" action="">
                 		<div class="form-group">
-                			<input class="form-control" type="text" name="name" placeholder="Client Name...">
+                			<input class="form-control" type="text" name="client_name" placeholder="Client Name...">
                 		</div>
                 		<div class="form-group">
                 			<button class="btn btn-success btn-block" type="submit"><i class="fa fa-plus"></i> Create Client</button>

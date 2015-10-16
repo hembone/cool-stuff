@@ -1,5 +1,6 @@
+var APP;
 $(document).ready(function() {
-	var APP = {
+	APP = {
 
 		global : {
 			init : function() {
@@ -40,6 +41,7 @@ $(document).ready(function() {
 			init : function() {
 				APP.emailManage.setListeners();
 				APP.emailManage.buildCategoryList();
+				APP.emailManage.buildClientList();
 			},
 			setListeners : function() {
 				$(document).on('click', '#manage-tabs a', function(e) {
@@ -53,11 +55,68 @@ $(document).ready(function() {
 						APP.global.sendToApi('new-category', data, APP.emailManage.newCategoryCallback);
 					}
 				});
+				$(document).on('submit', '.edit-category-form', function(e) {
+					e.preventDefault();
+					if($('[name=edit_cat_name]').val().trim()!=='') {
+						var data = $(this).serializeArray();
+						APP.global.sendToApi('edit-category', data, APP.emailManage.editCategoryCallback);
+					}
+				});
+				$(document).on('submit', '#new-client', function(e) {
+					e.preventDefault();
+					if($('[name=client_name]').val().trim()!=='') {
+						var data = $(this).serializeArray();
+						APP.global.sendToApi('new-client', data, APP.emailManage.newClientCallback);
+					}
+				});
+				$(document).on('submit', '.edit-client-form', function(e) {
+					e.preventDefault();
+					if($('[name=edit_client_name]').val().trim()!=='') {
+						var data = $(this).serializeArray();
+						APP.global.sendToApi('edit-client', data, APP.emailManage.editClientCallback);
+					}
+				});
 			},
 			newCategoryCallback : function(res) {
 				if(res.success) {
 					$('[name=cat_name]').val('');
 					APP.emailManage.buildCategoryList();
+				}
+			},
+			editCategoryCallback : function(res) {
+				if(res.success) {
+					APP.emailManage.buildCategoryList();
+				}
+			},
+			deleteCategory : function(categoryId) {
+				if(confirm('Are you sure you want to delete this category?')) {
+					APP.global.sendToApi('delete-category', categoryId, APP.emailManage.deleteCategoryCallback);
+				}
+			},
+			deleteCategoryCallback : function(res) {
+				if(res.success) {
+					APP.emailManage.buildCategoryList();
+				}
+			},
+			newClientCallback : function(res) {
+				if(res.success) {
+					$('[name=client_name]').val('');
+					APP.emailManage.buildClientList();
+				}
+			},
+			editClientCallback : function(res) {
+				if(res.success) {
+					APP.emailManage.buildClientList();
+				}
+			},
+			deleteClient : function(clientId) {
+				if(confirm('Are you sure you want to delete this client?')) {
+					APP.global.sendToApi('delete-client', clientId, APP.emailManage.deleteClientCallback);
+				}
+			},
+			deleteClientCallback : function(res) {
+				if(res.success) {
+					APP.emailManage.buildClientList();
 				}
 			},
 			buildCategoryList : function() {
@@ -66,11 +125,95 @@ $(document).ready(function() {
 			},
 			buildCategoryListCallback : function(res) {
 				if(res.success && res.categories.length>0) {
+					$('#insert-categories').html('');
 					$.each(res.categories, function(index, value) {
-						var html = '<div>'+value.name+'</div>';
+						var html = '';
+						html +=	'<div class="category_box">';
+							html +=	'<div id="category_'+value.id+'">';
+								html += '<span>'+value.name+'</span>';
+								html += '<div class="category_controls">';
+									html += '<button class="btn btn-danger btn-sm" onclick="APP.emailManage.deleteCategory('+value.id+');"><i class="fa fa-trash"></i></button>';
+									html += '<button class="btn btn-primary btn-sm" onclick="APP.emailManage.editCategory('+value.id+');"><i class="fa fa-pencil"></i> Edit</button>';
+								html += '</div>';
+								html += '<div class="clearfix"></div>';
+							html += '</div>';
+							html += '<div id="category_form_'+value.id+'" style="display:none;">';
+								html += '<form class="form-inline pull-left edit-category-form" method="post" action="#">';
+									html += '<input type="hidden" name="category_id" value="'+value.id+'">';
+									html += '<div class="form-group">';
+										html += '<input class="form-control input-sm" type="text" name="edit_cat_name" value="'+value.name+'">';
+									html += '</div>';
+									html += '<div class="form-group">';
+										html += '<button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-check"></i> Save Category</button>';
+									html += '</div>';
+								html += '</form>';
+								html += '<div class="category_controls">';
+									html += '<button class="btn btn-default btn-sm" onclick="APP.emailManage.closeEditCategory('+value.id+');"><i class="fa fa-close"></i> Cancel</button>';
+								html += '</div>';
+								html += '<div class="clearfix"></div>';
+							html += '</div>';
+						html += '</div>';
 						$('#insert-categories').append(html);
 					});
+				} else {
+					$('#insert-categories').html('No results found');
 				}
+			},
+			buildClientList : function() {
+				var data = '';
+				APP.global.sendToApi('get-clients', data, APP.emailManage.buildClientListCallback);
+			},
+			buildClientListCallback : function(res) {
+				if(res.success && res.clients.length>0) {
+					$('#insert-clients').html('');
+					$.each(res.clients, function(index, value) {
+						var html = '';
+						html +=	'<div class="client_box">';
+							html +=	'<div id="client_'+value.id+'">';
+								html += '<span>'+value.name+'</span>';
+								html += '<div class="client_controls">';
+									html += '<button class="btn btn-danger btn-sm" onclick="APP.emailManage.deleteClient('+value.id+');"><i class="fa fa-trash"></i></button>';
+									html += '<button class="btn btn-primary btn-sm" onclick="APP.emailManage.editClient('+value.id+');"><i class="fa fa-pencil"></i> Edit</button>';
+								html += '</div>';
+								html += '<div class="clearfix"></div>';
+							html += '</div>';
+							html += '<div id="client_form_'+value.id+'" style="display:none;">';
+								html += '<form class="form-inline pull-left edit-client-form" method="post" action="#">';
+									html += '<input type="hidden" name="client_id" value="'+value.id+'">';
+									html += '<div class="form-group">';
+										html += '<input class="form-control input-sm" type="text" name="edit_client_name" value="'+value.name+'">';
+									html += '</div>';
+									html += '<div class="form-group">';
+										html += '<button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-check"></i> Save Client</button>';
+									html += '</div>';
+								html += '</form>';
+								html += '<div class="client_controls">';
+									html += '<button class="btn btn-default btn-sm" onclick="APP.emailManage.closeEditClient('+value.id+');"><i class="fa fa-close"></i> Cancel</button>';
+								html += '</div>';
+								html += '<div class="clearfix"></div>';
+							html += '</div>';
+						html += '</div>';
+						$('#insert-clients').append(html);
+					});
+				} else {
+					$('#insert-clients').html('No results found');
+				}
+			},
+			editCategory : function(categoryId) {
+				$('#category_'+categoryId).hide();
+				$('#category_form_'+categoryId).fadeIn();
+			},
+			closeEditCategory : function(categoryId) {
+				$('#category_form_'+categoryId).hide();
+				$('#category_'+categoryId).fadeIn();
+			},
+			editClient : function(clientId) {
+				$('#client_'+clientId).hide();
+				$('#client_form_'+clientId).fadeIn();
+			},
+			closeEditClient : function(clientId) {
+				$('#client_form_'+clientId).hide();
+				$('#client_'+clientId).fadeIn();
 			}
 		},
 
