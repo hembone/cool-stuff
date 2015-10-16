@@ -14,7 +14,9 @@
 <base href="/">
 
 <link rel="stylesheet" href="/css/normalize.css" />
+<?php $this->printStyles(true); ?>
 <link rel="stylesheet" href="/css/main.css" />
+<?php $this->printStyles(); ?>
 
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -31,10 +33,9 @@
 
 </head>
 
-<?php
-require('templates/modules/header.php');
-require('templates/modules/navigation.php');
-?>
+<?php require('templates/modules/header.php'); ?>
+<?php require('templates/modules/navigation.php'); ?>
+
 <body lang="en" class="<?php $this->printBodyClasses(); ?>">
 
 <?php //echo'<pre>GET: '.print_r($_GET,true).'</pre>'; ?>
@@ -45,9 +46,12 @@ require('templates/modules/navigation.php');
 
 <?php $this->printContent(); ?>
 
-<?php
-require('templates/modules/footer.php');
-require('includes/scripts.php');
-?>
+<?php require('templates/modules/footer.php'); ?>
+
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<?php $this->printScripts(true); ?>
+<script src="/js/main.js"></script>
+<?php $this->printScripts(); ?>
+
 </body>
 </html>

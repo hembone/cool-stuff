@@ -19,6 +19,7 @@
     </ul>
 
     <div class="tab-content">
+
         <div class="tab-pane active" id="blocks">
             <div class="row">
                 <div class="col-sm-9"></div>
@@ -26,7 +27,8 @@
 
                 </div>
             </div>
-        </div>
+        </div><!-- / #blocks -->
+
         <div class="tab-pane" id="categories">
             <div class="row">
                 <div class="col-sm-9"></div>
@@ -41,7 +43,8 @@
                 	</form>
                 </div>
             </div>
-        </div>
+        </div><!-- / #categories -->
+
         <div class="tab-pane" id="clients">
             <div class="row">
                 <div class="col-sm-9"></div>
@@ -56,7 +59,8 @@
                 	</form>
                 </div>
             </div>
-        </div>
+        </div><!-- / #clients -->
+
     </div>
 
 </div><!-- / .container-fluid -->

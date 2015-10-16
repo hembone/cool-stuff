@@ -3,6 +3,10 @@ class theFramework {
 
 	function __construct() {
 		$this->bodyClasses = array();
+		$this->preloadStyles = array();
+		$this->styles = array();
+		$this->preloadScripts = array();
+		$this->scripts = array();
 		$this->template = 'default';
 	}
 
@@ -67,6 +71,68 @@ class theFramework {
 			$bodyClassStr .= $class.' ';
 		}
 		echo trim($bodyClassStr);
+	}
+
+	public function addStyle($styles='', $preload=false) {
+		if(gettype($styles)=='array') {
+			foreach($styles as $style) {
+				if($preload) {
+					array_push($this->preloadStyles, $style);
+				} else {
+					array_push($this->styles, $style);
+				}
+			}
+		}
+		if(gettype($styles)=='string') {
+			if($preload) {
+				array_push($this->preloadStyles, $styles);
+			} else {
+				array_push($this->styles, $styles);
+			}
+		}
+	}
+
+	public function printStyles($preload=false) {
+		$styles = $this->styles;
+		if($preload) {
+			$styles = $this->preloadStyles;
+		}
+		if(!empty($this->styles)) {
+			foreach($this->styles as $style) {
+				echo '<link rel="stylesheet" type="text/css" href="/css/'.$style.'">';
+			}
+		}
+	}
+
+	public function addScript($scripts='', $preload=false) {
+		if(gettype($scripts)=='array') {
+			foreach($scripts as $script) {
+				if($preload) {
+					array_push($this->preloadScripts, $script);
+				} else {
+					array_push($this->scripts, $script);
+				}
+			}
+		}
+		if(gettype($scripts)=='string') {
+			if($preload) {
+				array_push($this->preloadScripts, $scripts);
+			} else {
+				array_push($this->scripts, $scripts);
+			}
+		}
+	}
+
+	public function printScripts($preload=false) {
+		$scripts = $this->scripts;
+		if($preload) {
+			$scripts = $this->preloadScripts;
+		}
+		if(!empty($scripts)) {
+			foreach($scripts as $script) {
+				echo '<script type="text/javascript" src="/js/'.$script.'"></script>';
+			}
+		}
 	}
 
 	public function printContent() {

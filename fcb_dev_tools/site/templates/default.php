@@ -15,7 +15,9 @@
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<?php $this->printStyles(true); ?>
 <link rel="stylesheet" href="/css/main.css" />
+<?php $this->printStyles(); ?>
 
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -37,9 +39,13 @@ require('templates/modules/navigation.php');
 
 <?php $this->printContent(); ?>
 
-<?php
-require('templates/modules/footer.php');
-require('includes/scripts.php');
-?>
+<?php require('templates/modules/footer.php'); ?>
+
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<?php $this->printScripts(true); ?>
+<script src="/js/main-min.js"></script>
+<?php $this->printScripts(); ?>
+
 </body>
 </html>
