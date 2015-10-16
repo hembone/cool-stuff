@@ -39,6 +39,7 @@ $(document).ready(function() {
 		emailManage : {
 			init : function() {
 				APP.emailManage.setListeners();
+				APP.emailManage.buildCategoryList();
 			},
 			setListeners : function() {
 				$(document).on('click', '#manage-tabs a', function(e) {
@@ -47,14 +48,29 @@ $(document).ready(function() {
 				});
 				$(document).on('submit', '#new-category', function(e) {
 					e.preventDefault();
-					if($(this).val()!=='') {
+					if($('[name=cat_name]').val().trim()!=='') {
 						var data = $(this).serializeArray();
 						APP.global.sendToApi('new-category', data, APP.emailManage.newCategoryCallback);
 					}
 				});
 			},
 			newCategoryCallback : function(res) {
-				console.log(res);
+				if(res.success) {
+					$('[name=cat_name]').val('');
+					APP.emailManage.buildCategoryList();
+				}
+			},
+			buildCategoryList : function() {
+				var data = '';
+				APP.global.sendToApi('get-categories', data, APP.emailManage.buildCategoryListCallback);
+			},
+			buildCategoryListCallback : function(res) {
+				if(res.success && res.categories.length>0) {
+					$.each(res.categories, function(index, value) {
+						var html = '<div>'+value.name+'</div>';
+						$('#insert-categories').append(html);
+					});
+				}
 			}
 		},
 

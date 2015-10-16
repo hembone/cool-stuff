@@ -8,6 +8,24 @@ header("Pragma: no-cache");
 
 if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
 	switch($_REQUEST['action']) {
+		case 'get-categories':
+			$APP = new appHelper();
+			$result = $APP->getCategories('');
+			if($result) {
+				exit(json_encode(array('success'=>true, 'categories'=>$result)));
+			} else {
+				exit(json_encode(array('success'=>false)));
+			}
+			break;
+		case 'new-category':
+			$APP = new appHelper();
+			$result = $APP->newCategory(format_data($_REQUEST['data']));
+			if($result) {
+				exit(json_encode(array('success'=>true)));
+			} else {
+				exit(json_encode(array('success'=>false)));
+			}
+			break;
 		case 'get-lorem':
 			$APP = new appHelper();
 			$result = $APP->getLorem();

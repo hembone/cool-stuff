@@ -31,11 +31,13 @@
 
         <div class="tab-pane" id="categories">
             <div class="row">
-                <div class="col-sm-9"></div>
+                <div class="col-sm-9">
+                    <div id="insert-categories"></div>
+                </div>
                 <div class="col-sm-3">
                     <form id="new-category" method="post" action="">
                 		<div class="form-group">
-                			<input class="form-control" type="text" name="name" placeholder="Category Name...">
+                			<input class="form-control" type="text" name="cat_name" placeholder="Category Name...">
                 		</div>
                 		<div class="form-group">
                 			<button class="btn btn-success btn-block" type="submit"><i class="fa fa-plus"></i> Create Category</button>

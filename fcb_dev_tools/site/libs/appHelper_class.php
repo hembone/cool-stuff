@@ -11,6 +11,28 @@ class appHelper {
 		}
     }
 
+	public function getCategories($data) {
+		$sql = "SELECT id, name FROM categories ORDER BY name";
+		$params = array();
+		$res = $this->DB->query($this->conn, $sql, $params, 'assoc');
+		if($res['error']) {
+			return false;
+		} else {
+			return $res['results'];
+		}
+	}
+
+	public function newCategory($data) {
+		$sql = "INSERT INTO categories (name, updated_on, created_on) VALUES (:name, :updated_on, :created_on)";
+		$params = array(
+			array(':name', $data['cat_name'])
+			,array(':updated_on', date("Y-m-d H:i:s"))
+			,array(':created_on', date("Y-m-d H:i:s"))
+		);
+		$this->DB->query($this->conn, $sql, $params);
+		return true;
+	}
+
 	public function getLorem() {
 		$lorem_url = 'http://loripsum.net/api/'.rand(2,4).'/medium';
 		$html = file_get_contents($lorem_url);

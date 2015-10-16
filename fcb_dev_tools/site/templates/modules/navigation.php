@@ -9,6 +9,6 @@
         </ul>
     </li>
     <li class="<?php echo (isset($_GET['page'])&&$_GET['page']=='banner-tester'?'active':''); ?>"><a href="/banner-tester"><i class="fa fa-bug"></i> Banner Tester</a></li>
-    <li class="<?php echo (isset($_GET['page'])&&$_GET['page']=='social-ranking'?'active':''); ?>"><a href="/social-ranking"><i class="fa fa-line-chart"></i> Social Ranking</a></li>
+    <!-- <li class="<?php //echo (isset($_GET['page'])&&$_GET['page']=='social-ranking'?'active':''); ?>"><a href="/social-ranking"><i class="fa fa-line-chart"></i> Social Ranking</a></li> -->
 </ul>
 </div>
