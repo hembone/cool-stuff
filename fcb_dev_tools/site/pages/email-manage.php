@@ -22,9 +22,30 @@
 
         <div class="tab-pane active" id="blocks">
             <div class="row">
-                <div class="col-sm-9"></div>
-                <div class="col-sm-3">
-
+                <div class="col-sm-10">
+                    <div class="row">
+            			<form id="block_filters" method="post" action="#">
+            			<div class="col-md-4">
+            				<input id="name" class="form-control input-sm" type="text" name="name" placeholder="Name...">
+            			</div>
+            			<div class="col-md-3">
+            				<select id="category" class="form-control input-sm" name="category">
+            					<option value="">Category...</option>
+            				</select>
+            			</div>
+            			<div class="col-md-3">
+            				<select id="brand" class="form-control input-sm" name="brand">
+            					<option value="">Brand...</option>
+            				</select>
+            			</div>
+            			<div class="col-md-2">
+            				<button id="search_btn" class="btn btn-primary btn-sm btn-block" type="button"><i class="fa fa-search"></i> Search</button>
+            			</div>
+            			</form>
+            		</div>
+                </div>
+                <div class="col-sm-2">
+                    <button id="new-block" class="btn btn-success btn-sm btn-block" type="button"><i class="fa fa-plus"></i> New Block</button>
                 </div>
             </div>
         </div><!-- / #blocks -->
