@@ -40,8 +40,10 @@ $(document).ready(function() {
 		emailManage : {
 			init : function() {
 				APP.emailManage.setListeners();
+				APP.emailManage.buildBlockList();
 				APP.emailManage.buildCategoryList();
 				APP.emailManage.buildClientList();
+				APP.emailManage.loadAce();
 			},
 			setListeners : function() {
 				$(document).on('click', '#manage-tabs a', function(e) {
@@ -50,6 +52,17 @@ $(document).ready(function() {
 				});
 				$(document).on('click', '#new-block', function() {
 					$('#manage-overlay').fadeIn();
+				});
+				$(document).on('click', '#close-overlay', function() {
+					$('#manage-overlay').fadeOut();
+				});
+				$(document).on('submit', '#edit-block-form', function(e) {
+					e.preventDefault();
+					if($('#block-name').val().trim()!=='') {
+						var data = $(this).serializeArray();
+						APP.global.sendToApi('edit-block', data);
+						$('#manage-overlay').fadeOut();
+					}
 				});
 				$(document).on('submit', '#new-category', function(e) {
 					e.preventDefault();
@@ -79,6 +92,20 @@ $(document).ready(function() {
 						APP.global.sendToApi('edit-client', data, APP.emailManage.editClientCallback);
 					}
 				});
+			},
+			loadAce : function() {
+				APP.cssAce = ace.edit("css_ace");
+				APP.cssAce.getSession().setMode("ace/mode/css");
+				APP.cssAce.session.setUseWorker(false);
+				APP.cssAce.setValue($('#css').val(), 1);
+
+				APP.htmlAce = ace.edit("html_ace");
+				APP.htmlAce.getSession().setMode("ace/mode/html");
+				APP.htmlAce.session.setUseWorker(false);
+				APP.htmlAce.setValue($('#html').val(), 1);
+			},
+			buildBlockList : function() {
+
 			},
 			newCategoryCallback : function(res) {
 				if(res.success) {
@@ -160,6 +187,17 @@ $(document).ready(function() {
 				} else {
 					$('#insert-categories').html('No results found');
 				}
+				APP.emailManage.loadCategoryDropdowns(res);
+			},
+			loadCategoryDropdowns : function(res) {
+				var html = '<option value="">Category...</option>';
+				if(res.success && res.categories.length>0) {
+					$.each(res.categories, function(index, value) {
+						html += '<option value="'+value.id+'">'+value.name+'</option>';
+					});
+				}
+				$('#filter-category').html(html);
+				$('#edit-category').html(html);
 			},
 			buildClientList : function() {
 				APP.global.sendToApi('get-clients', '', APP.emailManage.buildClientListCallback);
@@ -199,6 +237,17 @@ $(document).ready(function() {
 				} else {
 					$('#insert-clients').html('No results found');
 				}
+				APP.emailManage.loadClientDropdowns(res);
+			},
+			loadClientDropdowns : function(res) {
+				var html = '<option value="">Client...</option>';
+				if(res.success && res.clients.length>0) {
+					$.each(res.clients, function(index, value) {
+						html += '<option value="'+value.id+'">'+value.name+'</option>';
+					});
+				}
+				$('#filter-client').html(html);
+				$('#edit-client').html(html);
 			},
 			editCategory : function(categoryId) {
 				$('#category_'+categoryId).hide();

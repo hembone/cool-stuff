@@ -99,7 +99,7 @@ class theFramework {
 		}
 		if(!empty($this->styles)) {
 			foreach($this->styles as $style) {
-				echo '<link rel="stylesheet" type="text/css" href="/css/'.$style.'">';
+				echo '<link rel="stylesheet" type="text/css" href="'.$style.'">';
 			}
 		}
 	}
@@ -130,7 +130,7 @@ class theFramework {
 		}
 		if(!empty($scripts)) {
 			foreach($scripts as $script) {
-				echo '<script type="text/javascript" src="/js/'.$script.'"></script>';
+				echo '<script type="text/javascript" src="'.$script.'"></script>';
 			}
 		}
 	}

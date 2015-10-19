@@ -30,7 +30,7 @@ CREATE TABLE `blocks` (
   `client_id` int(11) DEFAULT NULL,
   `name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `css` blob,
-  `code` blob,
+  `html` blob,
   `updated_on` datetime DEFAULT NULL,
   `created_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -50,7 +50,7 @@ CREATE TABLE `categories` (
   `updated_on` datetime DEFAULT NULL,
   `created_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `clients` (
   `updated_on` datetime DEFAULT NULL,
   `created_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -78,4 +78,4 @@ CREATE TABLE `clients` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-09 14:56:03
+-- Dump completed on 2015-10-19 16:47:14

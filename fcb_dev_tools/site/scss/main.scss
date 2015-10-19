@@ -25,6 +25,16 @@ $nav-height: 56px;
 //// Email Manage
 ////////////////////////////*/
 .email-manage {
+    .manage-overlay-nav {
+        padding: 10px 0;
+        #close-overlay {
+            float: right;
+            margin-right: 14px;
+            color: #ffffff;
+            font-size: 2em;
+            cursor: pointer;
+        }
+    }
     #manage-overlay {
     	background: rgba(0,0,0,0.8);
     	position: fixed;
@@ -35,6 +45,17 @@ $nav-height: 56px;
     	z-index: 100;
         margin-top: $nav-height;
         display: none;
+        label {
+            color: #ffffff;
+        }
+        #css_ace {
+        	border-radius: 4px;
+        	height: 200px;
+        }
+        #html_ace {
+        	border-radius: 4px;
+        	height: 300px;
+        }
     }
     #manage-tabs {
         margin-bottom: 10px;

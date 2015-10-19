@@ -11,6 +11,35 @@ class appHelper {
 		}
     }
 
+	public function editBlock($data) {
+		if(isset($data['block_id']) && !empty($data['block_id'])) {
+			$sql = "UPDATE blocks SET category_id=:category_id, client_id=:client_id, name=:name, css=:css, html=:html, updated_on=:updated_on WHERE id=:id";
+			$params = array(
+				array(':category_id', $data['category_id'])
+				,array(':client_id', $data['client_id'])
+				,array(':name', $data['name'])
+				,array(':css', $data['css'])
+				,array(':html', $data['html'])
+				,array(':updated_on', date("Y-m-d H:i:s"))
+				,array(':id', $data['block_id'])
+			);
+			$this->DB->query($this->conn, $sql, $params);
+		} else {
+			$sql = "INSERT INTO blocks (category_id, client_id, name, css, html, updated_on, created_on) VALUES (:category_id, :client_id, :name, :css, :html, :updated_on, :created_on)";
+			$params = array(
+				array(':category_id', $data['category_id'])
+				,array(':client_id', $data['client_id'])
+				,array(':name', $data['name'])
+				,array(':css', $data['css'])
+				,array(':html', $data['html'])
+				,array(':updated_on', date("Y-m-d H:i:s"))
+				,array(':created_on', date("Y-m-d H:i:s"))
+			);
+			$this->DB->query($this->conn, $sql, $params);
+		}
+		return true;
+	}
+
 	public function getCategories($data) {
 		$sql = "SELECT id, name FROM categories ORDER BY name";
 		$params = array();

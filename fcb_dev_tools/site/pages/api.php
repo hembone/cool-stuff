@@ -8,6 +8,15 @@ header("Pragma: no-cache");
 
 if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
 	switch($_REQUEST['action']) {
+		case 'edit-block':
+			$APP = new appHelper();
+			$result = $APP->editBlock(format_data($_REQUEST['data']));
+			if($result) {
+				exit(json_encode(array('success'=>true)));
+			} else {
+				exit(json_encode(array('success'=>false)));
+			}
+			break;
 		case 'get-categories':
 			$APP = new appHelper();
 			$result = $APP->getCategories('');
