@@ -8,6 +8,24 @@ header("Pragma: no-cache");
 
 if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
 	switch($_REQUEST['action']) {
+		case 'get-blocks':
+			$APP = new appHelper();
+			$result = $APP->getBlocks(format_data($_REQUEST['data']));
+			if($result) {
+				exit(json_encode(array('success'=>true, 'blocks'=>$result)));
+			} else {
+				exit(json_encode(array('success'=>false)));
+			}
+			break;
+		case 'get-block':
+			$APP = new appHelper();
+			$result = $APP->getBlock($_REQUEST['data']);
+			if($result) {
+				exit(json_encode(array('success'=>true, 'block'=>$result)));
+			} else {
+				exit(json_encode(array('success'=>false)));
+			}
+			break;
 		case 'edit-block':
 			$APP = new appHelper();
 			$result = $APP->editBlock(format_data($_REQUEST['data']));
@@ -17,9 +35,18 @@ if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
 				exit(json_encode(array('success'=>false)));
 			}
 			break;
+		case 'delete-block':
+			$APP = new appHelper();
+			$result = $APP->deleteBlock($_REQUEST['data']);
+			if($result) {
+				exit(json_encode(array('success'=>true)));
+			} else {
+				exit(json_encode(array('success'=>false)));
+			}
+			break;
 		case 'get-categories':
 			$APP = new appHelper();
-			$result = $APP->getCategories('');
+			$result = $APP->getCategories();
 			if($result) {
 				exit(json_encode(array('success'=>true, 'categories'=>$result)));
 			} else {
@@ -55,7 +82,7 @@ if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
 			break;
 		case 'get-clients':
 			$APP = new appHelper();
-			$result = $APP->getClients('');
+			$result = $APP->getClients();
 			if($result) {
 				exit(json_encode(array('success'=>true, 'clients'=>$result)));
 			} else {

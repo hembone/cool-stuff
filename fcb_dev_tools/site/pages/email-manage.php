@@ -25,18 +25,18 @@ $this->addScript('//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js', true);
         		</div>
         	</div>
         	<div class="col-md-3">
-        		<input type="hidden" name="block_id" value="">
+        		<input id="block-id" type="hidden" name="block_id" value="">
         		<div class="form-group">
         			<label for="name">Name</label>
         			<input id="block-name" class="form-control" type="text" name="name" value="">
         		</div>
         		<div class="form-group">
         			<label for="category">Category</label>
-        			<select id="edit-category" class="form-control" name="category"></select>
+        			<select id="edit-category" class="form-control" name="category_id"></select>
         		</div>
         		<div class="form-group">
         			<label for="client">Client</label>
-        			<select id="edit-client" class="form-control" name="client"></select>
+        			<select id="edit-client" class="form-control" name="client_id"></select>
         		</div>
         		<!-- <div class="form-group">
         			<div id="filelist"></div>
@@ -73,9 +73,9 @@ $this->addScript('//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js', true);
             <div class="row">
                 <div class="col-sm-10">
                     <div class="row">
-            			<form id="block_filters" method="post" action="">
+            			<form id="block-filters" method="post" action="">
                 			<div class="col-md-4">
-                				<input id="name" class="form-control input-sm" type="text" name="name" placeholder="Name...">
+                				<input id="filter-name" class="form-control input-sm" type="text" name="name" placeholder="Name...">
                 			</div>
                 			<div class="col-md-3">
                 				<select id="filter-category" class="form-control input-sm" name="category"></select>
@@ -94,9 +94,7 @@ $this->addScript('//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js', true);
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-
-                </div>
+                <div id="insert-blocks" class="col-md-12"></div>
             </div>
         </div><!-- / #blocks -->
 

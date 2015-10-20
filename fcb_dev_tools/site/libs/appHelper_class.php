@@ -11,6 +11,48 @@ class appHelper {
 		}
     }
 
+	public function getBlocks($data) {
+		$where = '';
+		$trim_it = false;
+		if(!empty($data['name']) || !empty($data['category']) || !empty($data['client'])) {
+			$where .= 'WHERE ';
+			$trim_it = true;
+		}
+		if(!empty($data['name'])) {
+			$where .= 'name LIKE \'%'.$data['name'].'%\' AND ';
+		}
+		if(!empty($data['category'])) {
+			$where .= 'category_id='.$data['category'].' AND ';
+		}
+		if(!empty($data['client'])) {
+			$where .= 'client_id='.$data['client'].' AND ';
+		}
+		if($trim_it) {
+			$where = substr($where, 0, -5);
+		}
+		$sql = "SELECT id, category_id, client_id, name, css, html FROM blocks ".$where." ORDER BY name";
+		$params = array();
+		$res = $this->DB->query($this->conn, $sql, $params, 'assoc', true);
+		if($res['error']) {
+			return $sql;
+		} else {
+			return $res['results'];
+		}
+	}
+
+	public function getBlock($block_id) {
+		$sql = "SELECT id, category_id, client_id, name, css, html FROM blocks WHERE id=:id";
+		$params = array(
+			array(':id', $block_id)
+		);
+		$res = $this->DB->query($this->conn, $sql, $params, 'assoc');
+		if($res['error']) {
+			return false;
+		} else {
+			return $res['results'];
+		}
+	}
+
 	public function editBlock($data) {
 		if(isset($data['block_id']) && !empty($data['block_id'])) {
 			$sql = "UPDATE blocks SET category_id=:category_id, client_id=:client_id, name=:name, css=:css, html=:html, updated_on=:updated_on WHERE id=:id";
@@ -40,7 +82,16 @@ class appHelper {
 		return true;
 	}
 
-	public function getCategories($data) {
+	public function deleteBlock($block_id) {
+		$sql = "DELETE FROM blocks WHERE id=:id";
+		$params = array(
+			array(':id', $block_id)
+		);
+		$this->DB->query($this->conn, $sql, $params);
+		return true;
+	}
+
+	public function getCategories() {
 		$sql = "SELECT id, name FROM categories ORDER BY name";
 		$params = array();
 		$res = $this->DB->query($this->conn, $sql, $params, 'assoc', true);
@@ -82,7 +133,7 @@ class appHelper {
 		return true;
 	}
 
-	public function getClients($data) {
+	public function getClients() {
 		$sql = "SELECT id, name FROM clients ORDER BY name";
 		$params = array();
 		$res = $this->DB->query($this->conn, $sql, $params, 'assoc', true);

@@ -43,7 +43,6 @@ $(document).ready(function() {
 				APP.emailManage.buildBlockList();
 				APP.emailManage.buildCategoryList();
 				APP.emailManage.buildClientList();
-				APP.emailManage.loadAce();
 			},
 			setListeners : function() {
 				$(document).on('click', '#manage-tabs a', function(e) {
@@ -55,13 +54,50 @@ $(document).ready(function() {
 				});
 				$(document).on('click', '#close-overlay', function() {
 					$('#manage-overlay').fadeOut();
+					APP.emailManage.clearBlockForm();
+				});
+				$(document).on('keyup keypress', '#block-filters', function(e) {
+					var code = e.keyCode || e.which;
+					if(code == 13) {
+						e.preventDefault();
+						return false;
+					}
+				});
+				$(document).on('keyup blur', '#filter-name', function() {
+					APP.emailManage.buildBlockList();
+				});
+				$(document).on('change', '#filter-category', function() {
+					APP.emailManage.buildBlockList();
+				});
+				$(document).on('change', '#filter-client', function() {
+					APP.emailManage.buildBlockList();
+				});
+				$(document).on('click', '#search_btn', function() {
+					APP.emailManage.buildBlockList();
+				});
+				$(document).on('click', '.delete-block', function() {
+					if(confirm('Are you sure you want to delete this block?')) {
+						var blockId = $(this).data('id');
+						APP.global.sendToApi('delete-block', blockId);
+						APP.emailManage.buildBlockList();
+					}
+				});
+				$(document).on('click', '.edit-block', function() {
+					var blockId = $(this).data('id');
+					APP.global.sendToApi('get-block', blockId, APP.emailManage.loadEditBlockCallback);
 				});
 				$(document).on('submit', '#edit-block-form', function(e) {
 					e.preventDefault();
 					if($('#block-name').val().trim()!=='') {
+						var css = APP.cssAce.getValue();
+			            $('#css').val(css);
+			            var html = APP.htmlAce.getValue();
+			            $('#html').val(html);
 						var data = $(this).serializeArray();
 						APP.global.sendToApi('edit-block', data);
+						APP.emailManage.buildBlockList();
 						$('#manage-overlay').fadeOut();
+						APP.emailManage.clearBlockForm();
 					}
 				});
 				$(document).on('submit', '#new-category', function(e) {
@@ -97,15 +133,61 @@ $(document).ready(function() {
 				APP.cssAce = ace.edit("css_ace");
 				APP.cssAce.getSession().setMode("ace/mode/css");
 				APP.cssAce.session.setUseWorker(false);
-				APP.cssAce.setValue($('#css').val(), 1);
-
 				APP.htmlAce = ace.edit("html_ace");
 				APP.htmlAce.getSession().setMode("ace/mode/html");
 				APP.htmlAce.session.setUseWorker(false);
-				APP.htmlAce.setValue($('#html').val(), 1);
+			},
+			clearBlockForm : function() {
+				document.getElementById("edit-block-form").reset();
+				APP.cssAce.destroy();
+				APP.htmlAce.destroy();
 			},
 			buildBlockList : function() {
-
+				var data = $('#block-filters').serializeArray();
+				APP.global.sendToApi('get-blocks', data, APP.emailManage.buildBlockListListCallback);
+			},
+			buildBlockListListCallback : function(res) {
+				if(res.success && res.blocks.length>0) {
+					$('#insert-blocks').html('');
+					$.each(res.blocks, function(index, block) {
+						var html = '';
+						html += '<div class="row">';
+							html += '<div class="col-md-10">';
+								html += '<div class="block-title">'+block.name+'</div>';
+								html += '<div class="block-wrap">';
+									html += '<iframe id="iframe-'+block.id+'" scrolling="no" seamless="seamless"></iframe>';
+								html += '</div>';
+							html += '</div>';
+							html += '<div class="col-md-2">';
+								html += '<button class="btn btn-danger btn-block btn-xs delete-block" data-id="'+block.id+'"><i class="fa fa-trash"></i> Delete</button>';
+								html += '<button class="btn btn-info btn-block btn-sm edit-block" data-id="'+block.id+'"><i class="fa fa-pencil"></i> Edit</button>';
+							html += '</div>';
+						html += '</div>';
+						$('#insert-blocks').append(html);
+					});
+					$.each(res.blocks, function(index, block) {
+						var doc = document.getElementById('iframe-'+block.id).contentWindow.document;
+						doc.open();
+						doc.write('<style>'+block.css+'</style>');
+						doc.write(block.html);
+						doc.close();
+					});
+					$('#insert-blocks').fadeIn();
+				} else {
+					$('#insert-blocks').html('No results found');
+				}
+			},
+			loadEditBlockCallback : function(res) {
+				if(res.success) {
+					$('#block-id').val(res.block.id);
+					$('#block-name').val(res.block.name);
+					$('#edit-category option[value='+res.block.category_id+']').prop('selected', true);
+					$('#edit-client option[value='+res.block.client_id+']').prop('selected', true);
+					APP.emailManage.loadAce();
+					APP.cssAce.setValue(res.block.css, -1);
+					APP.htmlAce.setValue(res.block.html, -1);
+					$('#manage-overlay').fadeIn();
+				}
 			},
 			newCategoryCallback : function(res) {
 				if(res.success) {
