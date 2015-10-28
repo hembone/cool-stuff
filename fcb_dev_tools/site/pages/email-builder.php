@@ -21,7 +21,7 @@
                 <form id="block-filters" method="post" action="#">
                     <div class="col-md-4">
                         <select id="global-css" class="form-control input-sm" name="global-css">
-                            <option value="">Global CSS...</option>
+                            <option value="">Select Global CSS...</option>
                         </select>
                     </div>
                     <div class="col-md-2 col-md-offset-6">

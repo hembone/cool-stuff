@@ -81,7 +81,7 @@ $(document).ready(function() {
 				APP.global.sendToApi('get-categories', '', APP.emailBuilder.loadCategoryDropdownCallback);
 			},
 			loadCategoryDropdownCallback : function(res) {
-				var html = '<option value="">Category...</option>';
+				var html = '<option value="">All Categories</option>';
 				if(res.success && res.categories.length>0) {
 					$.each(res.categories, function(index, value) {
 						html += '<option value="'+value.id+'">'+value.name+'</option>';
@@ -93,7 +93,7 @@ $(document).ready(function() {
 				APP.global.sendToApi('get-clients', '', APP.emailBuilder.loadClientDropdownCallback);
 			},
 			loadClientDropdownCallback : function(res) {
-				var html = '<option value="">Client...</option>';
+				var html = '<option value="">All Clients</option>';
 				if(res.success && res.clients.length>0) {
 					$.each(res.clients, function(index, value) {
 						html += '<option value="'+value.id+'">'+value.name+'</option>';
@@ -352,7 +352,7 @@ $(document).ready(function() {
 				APP.emailManage.loadCategoryDropdowns(res);
 			},
 			loadCategoryDropdowns : function(res) {
-				var html = '<option value="">Category...</option>';
+				var html = '<option value="">All Categories</option>';
 				if(res.success && res.categories.length>0) {
 					$.each(res.categories, function(index, value) {
 						html += '<option value="'+value.id+'">'+value.name+'</option>';
@@ -402,7 +402,7 @@ $(document).ready(function() {
 				APP.emailManage.loadClientDropdowns(res);
 			},
 			loadClientDropdowns : function(res) {
-				var html = '<option value="">Client...</option>';
+				var html = '<option value="">All Clients</option>';
 				if(res.success && res.clients.length>0) {
 					$.each(res.clients, function(index, value) {
 						html += '<option value="'+value.id+'">'+value.name+'</option>';
