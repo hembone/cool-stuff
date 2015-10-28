@@ -6,7 +6,7 @@ date_default_timezone_set('America/Chicago');
 define("USE_DB", true);
 $protocol = (strpos($_SERVER['SERVER_PROTOCOL'],'https')?'https://':'http://');
 define("BASE_URL", $protocol.$_SERVER['HTTP_HOST']);
-define("API_KEY", "1");
+define("API_KEY", "mACRQX6bPvw26xqm");
 
 // Environment Globals
 switch($_SERVER['HTTP_HOST']) {

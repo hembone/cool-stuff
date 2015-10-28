@@ -9,7 +9,7 @@ $this->addScript('//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js', true);
         <div class="clearfix"></div>
     </div>
     <div class="container-fluid">
-        <form id="edit-block-form" role="form" method="post" action="">
+        <form id="edit-block-form" role="form" method="post" action="#">
         	<div class="col-md-9">
         		<div id="edit_box">
         			<div class="form-group">
@@ -73,8 +73,8 @@ $this->addScript('//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js', true);
             <div class="row">
                 <div class="col-sm-10">
                     <div class="row">
-            			<form id="block-filters" method="post" action="">
-                			<div class="col-md-4">
+            			<form id="block-filters" method="post" action="#">
+                			<div class="col-md-6">
                 				<input id="filter-name" class="form-control input-sm" type="text" name="name" placeholder="Name...">
                 			</div>
                 			<div class="col-md-3">
@@ -82,9 +82,6 @@ $this->addScript('//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js', true);
                 			</div>
                 			<div class="col-md-3">
                 				<select id="filter-client" class="form-control input-sm" name="client"></select>
-                			</div>
-                			<div class="col-md-2">
-                				<button id="search_btn" class="btn btn-primary btn-sm btn-block" type="button"><i class="fa fa-search"></i> Search</button>
                 			</div>
             			</form>
             		</div>
@@ -104,7 +101,7 @@ $this->addScript('//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js', true);
                     <div id="insert-categories"></div>
                 </div>
                 <div class="col-sm-3">
-                    <form id="new-category" method="post" action="">
+                    <form id="new-category" method="post" action="#">
                 		<div class="form-group">
                 			<input class="form-control" type="text" name="cat_name" placeholder="Category Name...">
                 		</div>
@@ -122,7 +119,7 @@ $this->addScript('//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js', true);
                     <div id="insert-clients"></div>
                 </div>
                 <div class="col-sm-3">
-                    <form  id="new-client" method="post" action="">
+                    <form  id="new-client" method="post" action="#">
                 		<div class="form-group">
                 			<input class="form-control" type="text" name="client_name" placeholder="Client Name...">
                 		</div>

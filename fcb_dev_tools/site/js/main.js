@@ -15,7 +15,7 @@ $(document).ready(function() {
 					method: "POST",
 					url: "/api",
 					dataType: "json",
-					data: { key: '1', action: action, data: data }
+					data: { key: 'mACRQX6bPvw26xqm', action: action, data: data }
 				})
 				.success(function(res) {
 					if(typeof callback==='function') {
@@ -33,7 +33,87 @@ $(document).ready(function() {
 
 		emailBuilder : {
 			init : function() {
-
+				APP.emailBuilder.setListeners();
+				APP.emailBuilder.buildBlockList();
+				APP.emailBuilder.loadCategoryDropdown();
+				APP.emailBuilder.loadClientDropdown();
+			},
+			setListeners : function() {
+				$(document).on('keyup keypress', '#block-filters', function(e) {
+					var code = e.keyCode || e.which;
+					if(code == 13) {
+						e.preventDefault();
+						return false;
+					}
+				});
+				$(document).on('keyup blur', '#filter-name', function() {
+					APP.emailBuilder.buildBlockList();
+				});
+				$(document).on('change', '#filter-category', function() {
+					APP.emailBuilder.buildBlockList();
+				});
+				$(document).on('change', '#filter-client', function() {
+					APP.emailBuilder.buildBlockList();
+				});
+				$(document).on('click', '.block-wrap', function() {
+					APP.emailBuilder.addBlock(this);
+				});
+			},
+			buildBlockList : function() {
+				var data = $('#block-filters').serializeArray();
+				APP.global.sendToApi('get-blocks', data, APP.emailBuilder.buildBlockListListCallback);
+			},
+			buildBlockListListCallback : function(res) {
+				if(res.success && res.blocks.length>0) {
+					$('#insert-blocks').html('');
+					$.each(res.blocks, function(index, block) {
+						var html = '';
+						html += '<div id="'+block.id+'" class="block-wrap">'+block.name+'</div>';
+						$('#insert-blocks').append(html);
+						$('#'+block.id).data('block', block);
+					});
+					$('#insert-blocks').fadeIn();
+				} else {
+					$('#insert-blocks').html('No results found');
+				}
+			},
+			loadCategoryDropdown : function() {
+				APP.global.sendToApi('get-categories', '', APP.emailBuilder.loadCategoryDropdownCallback);
+			},
+			loadCategoryDropdownCallback : function(res) {
+				var html = '<option value="">Category...</option>';
+				if(res.success && res.categories.length>0) {
+					$.each(res.categories, function(index, value) {
+						html += '<option value="'+value.id+'">'+value.name+'</option>';
+					});
+				}
+				$('#filter-category').html(html);
+			},
+			loadClientDropdown : function() {
+				APP.global.sendToApi('get-clients', '', APP.emailBuilder.loadClientDropdownCallback);
+			},
+			loadClientDropdownCallback : function(res) {
+				var html = '<option value="">Client...</option>';
+				if(res.success && res.clients.length>0) {
+					$.each(res.clients, function(index, value) {
+						html += '<option value="'+value.id+'">'+value.name+'</option>';
+					});
+				}
+				$('#filter-client').html(html);
+			},
+			addBlock : function(obj) {
+				var block = $(obj).data('block');
+				var rand = Math.random().toString(36).substr(2, 10);
+				var html = '';
+				html += '<div class="insert-wrap">';
+					html += '<iframe id="iframe-'+rand+'" scrolling="no" seamless="seamless"></iframe>';
+				html += '</div>';
+				$('#insert-email').append(html);
+				var doc = document.getElementById('iframe-'+rand).contentWindow.document;
+				doc.open();
+				doc.write('<style>'+block.css+'</style>');
+				doc.write(block.html);
+				doc.close();
 			}
 		},
 
@@ -50,6 +130,7 @@ $(document).ready(function() {
 					$(this).tab('show');
 				});
 				$(document).on('click', '#new-block', function() {
+					APP.emailManage.loadAce();
 					$('#manage-overlay').fadeIn();
 				});
 				$(document).on('click', '#close-overlay', function() {
@@ -70,9 +151,6 @@ $(document).ready(function() {
 					APP.emailManage.buildBlockList();
 				});
 				$(document).on('change', '#filter-client', function() {
-					APP.emailManage.buildBlockList();
-				});
-				$(document).on('click', '#search_btn', function() {
 					APP.emailManage.buildBlockList();
 				});
 				$(document).on('click', '.delete-block', function() {
@@ -133,9 +211,11 @@ $(document).ready(function() {
 				APP.cssAce = ace.edit("css_ace");
 				APP.cssAce.getSession().setMode("ace/mode/css");
 				APP.cssAce.session.setUseWorker(false);
+				APP.cssAce.setValue('', -1);
 				APP.htmlAce = ace.edit("html_ace");
 				APP.htmlAce.getSession().setMode("ace/mode/html");
 				APP.htmlAce.session.setUseWorker(false);
+				APP.htmlAce.setValue('', -1);
 			},
 			clearBlockForm : function() {
 				document.getElementById("edit-block-form").reset();
