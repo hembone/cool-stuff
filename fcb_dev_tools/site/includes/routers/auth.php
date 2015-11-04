@@ -18,6 +18,10 @@ $valid_bots = [];
 
 // Logic
 if(!in_array($this->page, $exceptions)) {
+
+	require_once 'libs/authHelper_class.php';
+	$AUTH = new authHelper();
+
 	$goto_login = true;
 
 	// Allow Trust
@@ -41,8 +45,8 @@ if(!in_array($this->page, $exceptions)) {
 	}
 
 	// Check for Cookie
-	if(isset($_COOKIE['cookie_id'])) {
-		$user = $AUTH->getUserByCookieId($_COOKIE['cookie_id']);
+	if(isset($_COOKIE['auth_id'])) {
+		$user = $AUTH->getUserByCookieId($_COOKIE['auth_id']);
 		if($user) {
 			$AUTH->setSession($user);
 		}
@@ -55,7 +59,7 @@ if(!in_array($this->page, $exceptions)) {
 
 	// Redirect
 	if($goto_login) {
-		header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . "/login");exit;
+		header("Location: " . BASE_URL . "/login");exit;
 	}
 }
 ?>

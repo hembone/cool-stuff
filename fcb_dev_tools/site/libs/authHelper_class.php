@@ -79,11 +79,11 @@ class authHelper {
 	public function setCookie($email=false) {
 		if($email) {
 			$expire = mktime(0, 0, 0, date('m'), date('d'), date('Y')+1);
-			$cookie_id = hash('sha256', $email.mt_rand(10,1000));
-			setcookie('cookie_id', $cookie_id, $expire, '/');
+			$auth_id = hash('sha256', $email.mt_rand(10,1000));
+			setcookie('auth_id', $auth_id, $expire, '/');
 			$sql = "UPDATE users SET cookieId=:cookieId WHERE email=:email";
 			$params = array(
-				array(':cookieId', $cookie_id)
+				array(':cookieId', $auth_id)
 				,array(':email', $email)
 			);
 			$this->DB->query($this->conn, $sql, $params);

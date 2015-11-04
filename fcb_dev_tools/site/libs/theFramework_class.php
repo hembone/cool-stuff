@@ -35,7 +35,7 @@ class theFramework {
 		if($this->isApi()) {
 			$this->printContent();
 		} else {
-			require 'includes/router.php';
+			require 'includes/routers.php';
 			require 'templates/'.$this->template.'.php';
 		}
 	}
