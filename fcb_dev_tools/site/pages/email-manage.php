@@ -65,6 +65,7 @@ $this->addScript('//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js', true);
         <li class="active"><a href="#blocks" data-toggle="tab">Blocks</a></li>
         <li><a href="#categories" data-toggle="tab">Categories</a></li>
         <li><a href="#clients" data-toggle="tab">Clients</a></li>
+        <li><a href="#global-css" data-toggle="tab">Global CSS</a></li>
     </ul>
 
     <div class="tab-content">
@@ -130,6 +131,22 @@ $this->addScript('//cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js', true);
                 </div>
             </div>
         </div><!-- / #clients -->
+
+        <div class="tab-pane" id="global-css">
+            <div class="row">
+                <form id="global-css-form" method="post" action="#">
+                <div class="col-sm-10">
+                    <div class="form-group">
+        				<div id="global_css_ace"></div>
+        				<textarea style="display:none;" id="global_css" name="global_css"></textarea>
+        			</div>
+                </div>
+                <div class="col-sm-2">
+                    <button id="save-global-css" class="btn btn-success btn-block" style="display:none;" type="submit"><i class="fa fa-save"></i> Save</button>
+                </div>
+                </form>
+            </div>
+        </div><!-- / #global-css -->
 
     </div>
 

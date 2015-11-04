@@ -175,6 +175,43 @@ class appHelper {
 		return true;
 	}
 
+	public function getGlobalCss() {
+		$sql = "SELECT id, name, css FROM global_css WHERE id=:id";
+		$params = array(
+			array(':id', 1)
+		);
+		$res = $this->DB->query($this->conn, $sql, $params, 'assoc');
+		if($res['error']) {
+			return false;
+		} else {
+			return $res['results'];
+		}
+	}
+
+	public function editGlobalCss($data) {
+		$sql = "UPDATE global_css SET name=:name, css=:css, updated_on=:updated_on WHERE id=:id";
+		$params = array(
+			array(':name', 'Default Global CSS')
+			,array(':css', $data['global_css'])
+			,array(':updated_on', date("Y-m-d H:i:s"))
+			,array(':id', 1)
+		);
+		$this->DB->query($this->conn, $sql, $params);
+		return true;
+	}
+
+	public function download($data) {
+		$global_css = $data['globalCSS'];
+		$html = '';
+		foreach($data['blocks'] as $id) {
+			$block = $this->getBlock($id);
+			$html .= $block['html'];
+		}
+		$filename = substr(str_shuffle(MD5(microtime())), 0, 10).'.html';
+		file_put_contents('downloads/'.$filename, $html);
+		return $filename;
+	}
+
 	public function getLorem() {
 		$lorem_url = 'http://loripsum.net/api/'.rand(2,4).'/medium';
 		$html = file_get_contents($lorem_url);

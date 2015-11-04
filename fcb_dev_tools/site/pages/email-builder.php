@@ -18,18 +18,20 @@
         </div>
         <div class="col-md-9">
             <div class="row">
-                <form id="block-filters" method="post" action="#">
-                    <div class="col-md-4">
-                        <select id="global-css" class="form-control input-sm" name="global-css">
-                            <option value="">Select Global CSS...</option>
+                <div class="col-md-4">
+                    <form method="post" action="#">
+                        <select id="global-css" class="form-control input-sm" style="display:none;" name="global-css">
+                            <option value="default">Default Global CSS</option>
                         </select>
-                    </div>
-                    <div class="col-md-2 col-md-offset-6">
-                        <button id="download-zip" class="btn btn-success btn-sm btn-block"><i class="fa fa-download"></i> Download Zip</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div class="col-md-2 col-md-offset-6">
+                    <button id="download-zip" class="btn btn-success btn-sm btn-block"><i class="fa fa-download"></i> Download</button>
+                </div>
             </div>
             <div id="insert-email"></div>
         </div>
     </div>
 </div><!-- /.container-fluid -->
+
+<iframe id="download-me" style="display:none;"></iframe>

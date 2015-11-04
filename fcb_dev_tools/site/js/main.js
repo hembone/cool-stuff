@@ -58,6 +58,12 @@ $(document).ready(function() {
 				$(document).on('click', '.block-wrap', function() {
 					APP.emailBuilder.addBlock(this);
 				});
+				$(document).on('click', '#download-zip', function() {
+					APP.emailBuilder.download();
+				});
+				$(document).on('click', '.delete-insert', function() {
+					$(this).parents('.insert-wrap').remove();
+				});
 			},
 			buildBlockList : function() {
 				var data = $('#block-filters').serializeArray();
@@ -105,15 +111,35 @@ $(document).ready(function() {
 				var block = $(obj).data('block');
 				var rand = Math.random().toString(36).substr(2, 10);
 				var html = '';
-				html += '<div class="insert-wrap">';
+				html += '<div id="wrap-'+rand+'" class="insert-wrap">';
+					html += '<div class="insert-controls">';
+						html += '<button class="btn btn-danger btn-xs delete-insert"><i class="fa fa-trash"></i></button>'
+					html += '</div>';
 					html += '<iframe id="iframe-'+rand+'" scrolling="no" seamless="seamless"></iframe>';
 				html += '</div>';
 				$('#insert-email').append(html);
+				$('#wrap-'+rand).data('block', block);
 				var doc = document.getElementById('iframe-'+rand).contentWindow.document;
 				doc.open();
 				doc.write('<style>'+block.css+'</style>');
 				doc.write(block.html);
 				doc.close();
+			},
+			download : function() {
+				var globalCSS = $('#global-css').val();
+				var blocks = [];
+				$('#insert-email .insert-wrap').each(function(index, el) {
+					var block = $(el).data('block');
+					blocks.push(block.id);
+				});
+				if(blocks.length>0) {
+					var data = {'globalCSS':globalCSS, 'blocks':blocks};
+					APP.global.sendToApi('download', data, APP.emailBuilder.downloadCallback);
+				}
+			},
+			downloadCallback : function(res) {
+				var path = '/email-download.php?key=mACRQX6bPvw26xqm&file='+res.filename;
+				$('#download-me').attr('src', path);
 			}
 		},
 
@@ -123,6 +149,7 @@ $(document).ready(function() {
 				APP.emailManage.buildBlockList();
 				APP.emailManage.buildCategoryList();
 				APP.emailManage.buildClientList();
+				APP.emailManage.loadGlobalCss();
 			},
 			setListeners : function() {
 				$(document).on('click', '#manage-tabs a', function(e) {
@@ -205,6 +232,14 @@ $(document).ready(function() {
 						var data = $(this).serializeArray();
 						APP.global.sendToApi('edit-client', data, APP.emailManage.editClientCallback);
 					}
+				});
+				$(document).on('submit', '#global-css-form', function(e) {
+					e.preventDefault();
+					var globalCss = APP.globalCssAce.getValue();
+					$('#global_css').val(globalCss);
+					var data = $(this).serializeArray();
+					APP.global.sendToApi('edit-global-css', data);
+					$('#save-global-css').fadeOut();
 				});
 			},
 			loadAce : function() {
@@ -426,6 +461,21 @@ $(document).ready(function() {
 			closeEditClient : function(clientId) {
 				$('#client_form_'+clientId).hide();
 				$('#client_'+clientId).fadeIn();
+			},
+			loadGlobalCss : function() {
+				APP.globalCssAce = ace.edit("global_css_ace");
+				APP.globalCssAce.getSession().setMode("ace/mode/css");
+				APP.globalCssAce.setTheme("ace/theme/monokai");
+				APP.globalCssAce.session.setUseWorker(false);
+				APP.globalCssAce.setValue('', -1);
+				APP.globalCssAce.getSession().on('change', function() {
+					$('#save-global-css').fadeIn();
+				});
+				APP.global.sendToApi('get-global-css', '', APP.emailManage.loadGlobalCssCallback);
+			},
+			loadGlobalCssCallback : function(res) {
+				APP.globalCssAce.setValue(res.result.css, -1);
+				$('#save-global-css').hide();
 			}
 		},
 

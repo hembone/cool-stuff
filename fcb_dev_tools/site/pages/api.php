@@ -116,6 +116,33 @@ if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
 				exit(json_encode(array('success'=>false)));
 			}
 			break;
+		case 'get-global-css':
+			$APP = new appHelper();
+			$result = $APP->getGlobalCss();
+			if($result) {
+				exit(json_encode(array('success'=>true, 'result'=>$result)));
+			} else {
+				exit(json_encode(array('success'=>false)));
+			}
+			break;
+		case 'edit-global-css':
+			$APP = new appHelper();
+			$result = $APP->editGlobalCss(format_data($_REQUEST['data']));
+			if($result) {
+				exit(json_encode(array('success'=>true)));
+			} else {
+				exit(json_encode(array('success'=>false)));
+			}
+			break;
+		case 'download':
+			$APP = new appHelper();
+			$result = $APP->download($_REQUEST['data']);
+			if($result) {
+				exit(json_encode(array('success'=>true, 'filename'=>$result)));
+			} else {
+				exit(json_encode(array('success'=>false)));
+			}
+			break;
 		case 'get-lorem':
 			$APP = new appHelper();
 			$result = $APP->getLorem();

@@ -40,6 +40,7 @@ $nav-height: 56px;
     #insert-email {
         padding-top: 10px;
         .insert-wrap {
+            position: relative;
             border: 1px solid #eeeeee;
             margin: 5px 0;
             -webkit-transition: all 500ms ease;
@@ -56,6 +57,20 @@ $nav-height: 56px;
             }
             &:hover {
                 border-color: #337AB7;
+                .insert-controls {
+                    opacity: 1;
+                }
+            }
+            .insert-controls {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                opacity: 0;
+                -webkit-transition: all 500ms ease;
+                -moz-transition: all 500ms ease;
+                -ms-transition: all 500ms ease;
+                -o-transition: all 500ms ease;
+                transition: all 500ms ease;
             }
         }
     }
@@ -175,6 +190,12 @@ $nav-height: 56px;
         }
         form .btn {
             margin-left: 6px;
+        }
+    }
+    #global-css {
+        #global_css_ace {
+            border-radius: 4px;
+        	height: 600px;
         }
     }
 }
