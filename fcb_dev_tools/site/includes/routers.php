@@ -2,6 +2,8 @@
 // Age Gate
 //require 'includes/routers/agegate.php';
 
-// Authorization
-require 'includes/routers/auth.php';
+// User Auth
+if(USE_AUTH) {
+	require 'includes/routers/auth.php';
+}
 ?>

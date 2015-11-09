@@ -6,7 +6,6 @@ $exceptions = array(
 	'404'
 	,'api'
 	,'login'
-	,'create-profile'
 	,'forgot-password'
 	,'forgot-password-reset'
 	,'age-gate'
@@ -16,11 +15,10 @@ $allow_trust = false;
 $allow_bots = false;
 $valid_bots = [];
 
+$AUTH = new authHelper();
+
 // Logic
 if(!in_array($this->page, $exceptions)) {
-
-	require_once 'libs/authHelper_class.php';
-	$AUTH = new authHelper();
 
 	$goto_login = true;
 

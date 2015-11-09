@@ -1,28 +1,81 @@
-var APP;
 $(document).ready(function() {
 	APP = {
 
 		global : {
 			init : function() {
+				if($('body').hasClass('create-profile')){APP.createProfile.init();}
+                if($('body').hasClass('login')){APP.login.init();}
 				if($('body').hasClass('home')){APP.home.init();}
 				if($('body').hasClass('email-builder')){APP.emailBuilder.init();}
 				if($('body').hasClass('email-manage')){APP.emailManage.init();}
 				if($('body').hasClass('banner-tester')){APP.bannerTester.init();}
 				if($('body').hasClass('social-ranking')){APP.socialRanking.init();}
+				APP.global.globalListeners();
+			},
+			globalListeners : function() {
+				$(document).on('click', '#logout', function(e) {
+					e.preventDefault();
+					APP.global.sendToApi('logout', '', APP.global.logoutCallback);
+				});
 			},
 			sendToApi : function(action, data, callback) {
 				$.ajax({
 					method: "POST",
 					url: "/api",
 					dataType: "json",
-					data: { key: 'mACRQX6bPvw26xqm', action: action, data: data }
+					data: { key: API_KEY, action: action, data: data }
 				})
 				.success(function(res) {
 					if(typeof callback==='function') {
 						callback(res);
 					}
 				});
+			},
+			logoutCallback : function(res) {
+				if(res.success) {
+					window.location.href = '/';
+				}
 			}
+		},
+
+		createProfile : {
+			init : function() {
+                APP.createProfile.setListeners();
+			},
+            setListeners : function() {
+                $(document).on('submit', '#create-form', function(e) {
+					e.preventDefault();
+					var data = $(this).serializeArray();
+					APP.global.sendToApi('add-user', data, APP.createProfile.newUserCallback);
+				});
+            },
+            newUserCallback : function(res) {
+                if(res.success) {
+                    window.location = "/";
+                } else {
+                    console.log('Error');
+                }
+            }
+		},
+
+        login : {
+			init : function() {
+                APP.login.setListeners();
+			},
+            setListeners : function() {
+                $(document).on('submit', '#login-form', function(e) {
+					e.preventDefault();
+					var data = $(this).serializeArray();
+					APP.global.sendToApi('login', data, APP.login.loginCallback);
+				});
+            },
+            loginCallback : function(res) {
+                if(res.success) {
+                    window.location = "/";
+                } else {
+                    console.log('Error');
+                }
+            }
 		},
 
 		home : {

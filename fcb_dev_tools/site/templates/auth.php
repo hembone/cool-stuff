@@ -43,6 +43,9 @@ require('templates/modules/header.php');
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <?php $this->printScripts(true); ?>
+<script>
+var API_KEY = "<?php echo API_KEY; ?>";
+</script>
 <script src="/js/main.js"></script>
 <?php $this->printScripts(); ?>
 

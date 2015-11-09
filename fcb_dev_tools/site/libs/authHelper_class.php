@@ -14,9 +14,31 @@ class authHelper {
 		}
 	}
 
+	public function allowedTypes($types, $redirect=false) {
+		$user = $this->getUserById($_SESSION[APP_KEY]['id']);
+		$allow = true;
+		if(gettype($types)=='array') {
+			if(!in_array($user['type'], $types)) {
+				$allow = false;
+			}
+		}
+		if(gettype($types)=='string') {
+			if($user['type']!=$types) {
+				$allow = false;
+			}
+		}
+		if($redirect) {
+			if(!$allow) {
+				header("Location: " . BASE_URL . "/");exit;
+			}
+		} else {
+			return $allow;
+		}
+	}
+
 	public function getUserById($id=false) {
 		if($id) {
-			$sql = "SELECT id, firstName, lastName, email FROM users WHERE id=:id";
+			$sql = "SELECT id, firstName, lastName, email, type FROM users WHERE id=:id";
 			$params = array(
 				array(':id', $id)
 			);
@@ -79,7 +101,7 @@ class authHelper {
 	public function setCookie($email=false) {
 		if($email) {
 			$expire = mktime(0, 0, 0, date('m'), date('d'), date('Y')+1);
-			$auth_id = hash('sha256', $email.mt_rand(10,1000));
+			$auth_id = hash('sha256', $email.mt_rand(10,100000));
 			setcookie('auth_id', $auth_id, $expire, '/');
 			$sql = "UPDATE users SET cookieId=:cookieId WHERE email=:email";
 			$params = array(
@@ -96,17 +118,16 @@ class authHelper {
 
 	public function addUser($data=false) {
 		if($data) {
-			$sql = "INSERT INTO users (password, firstName, lastName, email, phone, zip, dob) VALUES (:password, :firstName, :lastName, :email, :phone, :zip, :dob)";
+			$sql = "INSERT INTO users (password, firstName, lastName, email, type) VALUES (:password, :firstName, :lastName, :email, :type)";
 			$params = array(
 				array(':password', hash('sha256', $data['password'].APP_KEY))
 				,array(':firstName', $data['fname'])
 				,array(':lastName', $data['lname'])
 				,array(':email', $data['email'])
-				,array(':phone', $data['phone'])
-				,array(':zip', $data['zip'])
-				,array(':dob', $data['dob'])
+				,array(':type', $data['type'])
 			);
 			$result = $this->DB->query($this->conn, $sql, $params);
+			$this->checkCreds($data['email'], $data['password']);
 			return $result;
 		}
 	}
@@ -144,7 +165,7 @@ class authHelper {
 				);
 				$this->DB->query($this->conn, $sql, $params);
 				$to = $email;
-				$subject = "Summer Swarm Password Reset";
+				$subject = "Password Reset";
 				$headers = "MIME-Version: 1.0\r\n";
 				$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 				$headers .= "From: " . "support@".preg_replace('/^www./','',$_SERVER['HTTP_HOST']) . "\r\n";
@@ -200,7 +221,7 @@ class authHelper {
 	}
 
 	public function logOut() {
-		setcookie('cookie_id', '', time()-3600);
+		setcookie('auth_id', '', time()-3600);
 		unset($_SESSION[APP_KEY]);
 		return true;
 	}

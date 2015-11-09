@@ -8,6 +8,71 @@ header("Pragma: no-cache");
 
 if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
 	switch($_REQUEST['action']) {
+		case 'add-user':
+            $AUTH = new authHelper();
+    		if(!$AUTH->isLoggedIn()) {
+    			$form_data = format_data($_POST['data']);
+    			$user = $AUTH->getUserByEmail($form_data['email']);
+    			$results = NULL;
+    			if(!$user['id']) {
+    				$results = $AUTH->addUser($form_data);
+    				if($results['error']){
+    					exit( json_encode(array('success'=>false, 'error'=>$results['error'][2])) );
+    				}
+    				$user = $AUTH->getUserByEmail($form_data['email']);
+    				$AUTH->setSession($user);
+    			} else {
+    				exit( json_encode(array('success'=>false, 'message'=>'A profile exists with that email')) );
+    			}
+    			exit( json_encode(array('success'=>true, 'results'=>$results)) );
+    		} else {
+    			exit( json_encode(array('success'=>false, 'message'=>'Please log out to create new profile')) );
+    		}
+    		break;
+        case 'login':
+            $AUTH = new authHelper();
+    		if(!$AUTH->isLoggedIn()) {
+    			$form_data = format_data($_REQUEST['data']);
+    			if($AUTH->checkCreds($form_data['email'], $form_data['password'])) {
+    				$user = $AUTH->getUserByEmail($form_data['email']);
+    				if(isset($form_data['remember'])) {
+    					$AUTH->setCookie($form_data['email']);
+    				}
+    				exit( json_encode(array('success'=>true, 'user'=>$user)) );
+    			} else {
+    				exit( json_encode(array('success'=>false, 'message'=>'Invalid email or password')) );
+    			}
+    		} else {
+    			exit( json_encode(array('success'=>false, 'message'=>'You are already logged in')) );
+    		}
+    		break;
+        case 'forgot-password':
+            $AUTH = new authHelper();
+    		$form_data = format_data($_POST['data']);
+    		if($AUTH->forgotPassword($form_data['email'])) {
+    			exit( json_encode(array('success'=>true)) );
+    		} else {
+    			exit( json_encode(array('success'=>false)) );
+    		}
+    		break;
+    	case 'reset-password':
+            $AUTH = new authHelper();
+    		$form_data = format_data($_POST['data']);
+    		if($AUTH->resetPassword($form_data)) {
+    			exit( json_encode(array('success'=>true)) );
+    		} else {
+    			exit( json_encode(array('success'=>false)) );
+    		}
+    		break;
+		case 'logout':
+			$AUTH = new authHelper();
+			$result = $AUTH->logOut();
+			if($result) {
+				exit(json_encode(array('success'=>true)));
+			} else {
+				exit(json_encode(array('success'=>false)));
+			}
+			break;
 		case 'get-blocks':
 			$APP = new appHelper();
 			$result = $APP->getBlocks(format_data($_REQUEST['data']));
