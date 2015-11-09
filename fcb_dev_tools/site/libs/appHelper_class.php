@@ -201,6 +201,7 @@ class appHelper {
 	}
 
 	public function download($data) {
+		// add clean up here
 		$global_css = $data['globalCSS'];
 		$html = '';
 		foreach($data['blocks'] as $id) {
