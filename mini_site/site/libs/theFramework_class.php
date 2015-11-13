@@ -7,6 +7,7 @@ class theFramework {
 		$this->styles = array();
 		$this->preloadScripts = array();
 		$this->scripts = array();
+		$this->page = 'home';
 		$this->template = 'default';
 	}
 
@@ -16,7 +17,6 @@ class theFramework {
 	}
 
 	private function getPage() {
-		$this->page = 'home';
 		if(isset($_GET['page']) && $_GET['page']!='') {
 			$get_page = explode('.', $_GET['page']);
 			$this->page = $get_page[0];
@@ -35,7 +35,8 @@ class theFramework {
 		if($this->isApi()) {
 			$this->printContent();
 		} else {
-			include 'templates/'.$this->template.'.php';
+			require 'includes/routers.php';
+			require 'templates/'.$this->template.'.php';
 		}
 	}
 

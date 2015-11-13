@@ -47,7 +47,7 @@ if(USE_DB) {
 	require_once 'libs/mysqlHelper_class.php';
 }
 
-// Use Auth
+// Use Authentication
 if(USE_AUTH) {
 	require_once 'libs/authHelper_class.php';
 }

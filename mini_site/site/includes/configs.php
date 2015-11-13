@@ -4,6 +4,7 @@ date_default_timezone_set('America/Chicago');
 
 // Define Globals
 define("USE_DB", false);
+define("USE_AUTH", true);
 $protocol = (strpos($_SERVER['SERVER_PROTOCOL'],'https')?'https://':'http://');
 define("BASE_URL", $protocol.$_SERVER['HTTP_HOST']);
 define("API_KEY", "1");
@@ -43,6 +44,11 @@ if(DEBUG_MODE) {
 // Use Database
 if(USE_DB) {
 	require_once 'libs/mysqlHelper_class.php';
+}
+
+// Use Authentication
+if(USE_AUTH) {
+	require_once 'libs/authHelper_class.php';
 }
 
 // Initiate the APP Helper
