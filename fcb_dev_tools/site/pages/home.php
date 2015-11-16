@@ -4,7 +4,7 @@ $AUTH = new authHelper();
 ?>
 
 <?php if($AUTH->allowedTypes('pm')): ?>
-    Project manager
+    Project Manager
 <?php endif; ?>
 
 <?php if($AUTH->allowedTypes('create')): ?>

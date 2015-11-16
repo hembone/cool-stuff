@@ -20,5 +20,9 @@ $AUTH = new authHelper();
 <?php endif; ?>
 
 <?php if($AUTH->allowedTypes('admin')): ?>
-    Administrator
+    <a href="[download me]" target="_blank">Item 1</a></br>
+    <a href="[download me]" target="_blank">Item 2</a></br>
+    <a href="[download me]" target="_blank">Item 3</a></br>
+    <a href="[download me]" target="_blank">Item 4</a></br>
+    <a href="[download me]" target="_blank">Item 5</a></br>
 <?php endif; ?>

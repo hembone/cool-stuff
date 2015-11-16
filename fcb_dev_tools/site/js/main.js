@@ -537,6 +537,9 @@ $(document).ready(function() {
 				APP.bannerTester.setListeners();
 			},
 			setListeners : function() {
+				$(document).on('click', '#get-started', function() {
+	                $('#settings-overlay').fadeIn();
+	            });
 	            $(document).on('click', '#settings', function() {
 	                $('#settings-overlay').fadeIn();
 	            });

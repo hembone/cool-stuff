@@ -38,6 +38,12 @@
 
 <div class="container">
     <div class="row">
-        <div id="insert-iframes" class="col-sm-12"></div>
+        <div id="insert-iframes" class="col-sm-12">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <button id="get-started" class="btn btn-info btn-lg btn-block">Get Started <i class="fa fa-rocket"></i></button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
