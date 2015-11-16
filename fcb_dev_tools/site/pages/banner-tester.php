@@ -13,8 +13,10 @@
                         <option value="">Select Size...</option>
                         <option value="160x600">160 x 600</option>
                         <option value="180x150">180 x 150</option>
+                        <option value="300x50">300 x 50</option>
                         <option value="300x250">300 x 250</option>
                         <option value="300x600">300 x 600</option>
+                        <option value="320x50">320 x 50</option>
                         <option value="640x480">640 x 480</option>
                         <option value="728x90">728 x 90</option>
                         <option value="970x90">970 x 90</option>

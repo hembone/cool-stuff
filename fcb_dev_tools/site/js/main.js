@@ -573,8 +573,10 @@ $(document).ready(function() {
 	                    html += '<option value="">Select Size...</option>';
 	                    html += '<option value="160x600">160 x 600</option>';
 	                    html += '<option value="180x150">180 x 150</option>';
+						html += '<option value="300x50">300 x 50</option>';
 	                    html += '<option value="300x250">300 x 250</option>';
 	                    html += '<option value="300x600">300 x 600</option>';
+						html += '<option value="320x50">320 x 50</option>';
 	                    html += '<option value="640x480">640 x 480</option>';
 	                    html += '<option value="728x90">728 x 90</option>';
 	                    html += '<option value="970x90">970 x 90</option>';
