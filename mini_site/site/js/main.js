@@ -11,7 +11,7 @@ $(document).ready(function() {
 					method: "POST"
 					,url: "/api"
 					,dataType: "json"
-					,data: { key: '1', action: action, data: data }
+					,data: { key: API_KEY, action: action, data: data }
 				})
 				.success(function(res) {
 					if(typeof callback==='function') {

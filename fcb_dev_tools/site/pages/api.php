@@ -77,7 +77,7 @@ if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
 			$APP = new appHelper();
 			$result = $APP->getBlocks(format_data($_REQUEST['data']));
 			if($result) {
-				exit(json_encode(array('success'=>true, 'blocks'=>$result)));
+				exit(json_encode(array('success'=>true, 'blocks'=>$result['blocks'], 'globalCss'=>$result['global_css'])));
 			} else {
 				exit(json_encode(array('success'=>false)));
 			}

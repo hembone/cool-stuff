@@ -7,6 +7,7 @@ define("USE_DB", false);
 define("USE_AUTH", true);
 $protocol = (strpos($_SERVER['SERVER_PROTOCOL'],'https')?'https://':'http://');
 define("BASE_URL", $protocol.$_SERVER['HTTP_HOST']);
+define("APP_KEY", "1");
 define("API_KEY", "1");
 
 // Environment Globals

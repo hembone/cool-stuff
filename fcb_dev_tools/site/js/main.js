@@ -168,7 +168,7 @@ $(document).ready(function() {
 					html += '<div class="insert-controls">';
 						html += '<button class="btn btn-danger btn-xs delete-insert"><i class="fa fa-trash"></i></button>'
 					html += '</div>';
-					html += '<iframe id="iframe-'+rand+'" scrolling="no" seamless="seamless"></iframe>';
+					html += '<iframe id="iframe-'+rand+'" scrolling="no" seamless="seamless" onload="APP.emailBuilder.setIframeHeight(this);"></iframe>';
 				html += '</div>';
 				$('#insert-email').append(html);
 				$('#wrap-'+rand).data('block', block);
@@ -177,6 +177,11 @@ $(document).ready(function() {
 				doc.write('<style>'+block.css+'</style>');
 				doc.write(block.html);
 				doc.close();
+			},
+			setIframeHeight : function(iframe) {
+				$(iframe).height(0);
+				var h = $(iframe).contents().find('html').height();
+				$(iframe).height(h);
 			},
 			download : function() {
 				var globalCSS = $('#global-css').val();
@@ -298,10 +303,12 @@ $(document).ready(function() {
 			loadAce : function() {
 				APP.cssAce = ace.edit("css_ace");
 				APP.cssAce.getSession().setMode("ace/mode/css");
+				APP.cssAce.setTheme("ace/theme/monokai");
 				APP.cssAce.session.setUseWorker(false);
 				APP.cssAce.setValue('', -1);
 				APP.htmlAce = ace.edit("html_ace");
 				APP.htmlAce.getSession().setMode("ace/mode/html");
+				APP.htmlAce.setTheme("ace/theme/monokai");
 				APP.htmlAce.session.setUseWorker(false);
 				APP.htmlAce.setValue('', -1);
 			},
@@ -336,7 +343,7 @@ $(document).ready(function() {
 					$.each(res.blocks, function(index, block) {
 						var doc = document.getElementById('iframe-'+block.id).contentWindow.document;
 						doc.open();
-						doc.write('<style>'+block.css+'</style>');
+						doc.write('<style>'+res.globalCss.css+block.css+'</style>');
 						doc.write(block.html);
 						doc.close();
 					});

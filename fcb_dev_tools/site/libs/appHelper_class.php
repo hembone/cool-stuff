@@ -34,9 +34,15 @@ class appHelper {
 		$params = array();
 		$res = $this->DB->query($this->conn, $sql, $params, 'assoc', true);
 		if($res['error']) {
-			return $sql;
+			$blocks = false;
 		} else {
-			return $res['results'];
+			$blocks = $res['results'];
+		}
+		$global_css = $this->getGlobalCss();
+		if(!$blocks || !$global_css) {
+			return false;
+		} else {
+			return ['blocks'=>$blocks, 'global_css'=>$global_css];
 		}
 	}
 
