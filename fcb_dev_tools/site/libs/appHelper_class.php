@@ -207,13 +207,30 @@ class appHelper {
 	}
 
 	public function download($data) {
-		// add clean up here
-		$global_css = $data['globalCSS'];
+		$files = scandir('downloads');
+		foreach($files as $file) {
+			if($file!='.' && $file!='..') {
+				$mod_time = filemtime('downloads/'.$file);
+				$cutoff_time = mktime(date("H")-1,date("i"),date("s"),date("m"),date("d"),date("Y"));
+				if($mod_time<$cutoff_time) {
+					unlink('downloads/'.$file);
+				}
+			}
+		}
+		$global_css_id = $data['globalCSS'];
+		$res = $this->getGlobalCss();
+		$global_css = $res['css'];
+		$styles = '';
+		$blocks = '';
 		$html = '';
 		foreach($data['blocks'] as $id) {
 			$block = $this->getBlock($id);
-			$html .= $block['html'];
+			$styles .= $block['css'];
+			$blocks .= $block['html'];
 		}
+		$html .= '<style media="screen">'.$global_css.$styles.'</style>'."\n\n";
+		$html .= '<table><tbody>'.$blocks.'</tbody></table>'."\n\n";
+		$html .= '<style media="screen">'.$global_css.$styles.'</style>';
 		$filename = substr(str_shuffle(MD5(microtime())), 0, 10).'.html';
 		file_put_contents('downloads/'.$filename, $html);
 		return $filename;

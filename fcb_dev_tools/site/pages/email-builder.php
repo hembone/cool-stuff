@@ -29,7 +29,11 @@
                     <button id="download-zip" class="btn btn-success btn-sm btn-block"><i class="fa fa-download"></i> Download</button>
                 </div>
             </div>
-            <div id="insert-email"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="insert-email"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div><!-- /.container-fluid -->

@@ -127,9 +127,10 @@ $(document).ready(function() {
 					$('#insert-blocks').html('');
 					$.each(res.blocks, function(index, block) {
 						var html = '';
-						html += '<div id="'+block.id+'" class="block-wrap">'+block.name+'</div>';
+						html += '<div id="'+block.id+'" class="block-wrap" data-container="body" data-toggle="popover">'+block.name+'</div>';
 						$('#insert-blocks').append(html);
 						$('#'+block.id).data('block', block);
+						APP.emailBuilder.loadPreview(block);
 					});
 					$('#insert-blocks').fadeIn();
 				} else {
@@ -159,6 +160,24 @@ $(document).ready(function() {
 					});
 				}
 				$('#filter-client').html(html);
+			},
+			loadPreview : function(block) {
+				var rand = Math.random().toString(36).substr(2, 10);
+				var html = '<iframe id="popiframe-'+rand+'" scrolling="no" seamless="seamless" onload="APP.emailBuilder.setIframeHeight(this);">'+block.html+'</iframe>';
+				$('body').append(html);
+				var doc = document.getElementById('popiframe-'+rand).contentWindow.document;
+				doc.open();
+				doc.write('<style>'+block.css+'</style>');
+				doc.write(block.html);
+				doc.close();
+				$('#'+block.id).popover({
+					trigger : 'hover',
+					placement : 'right',
+					html : true,
+					content : function() {
+						return $('#popiframe-'+rand);
+					}
+				});
 			},
 			addBlock : function(obj) {
 				var block = $(obj).data('block');
@@ -330,7 +349,7 @@ $(document).ready(function() {
 							html += '<div class="col-md-10">';
 								html += '<div class="block-title">'+block.name+'</div>';
 								html += '<div class="block-wrap">';
-									html += '<iframe id="iframe-'+block.id+'" scrolling="no" seamless="seamless"></iframe>';
+									html += '<iframe id="iframe-'+block.id+'" scrolling="no" seamless="seamless" onload="APP.emailManage.setIframeHeight(this);"></iframe>';
 								html += '</div>';
 							html += '</div>';
 							html += '<div class="col-md-2">';
@@ -351,6 +370,11 @@ $(document).ready(function() {
 				} else {
 					$('#insert-blocks').html('No results found');
 				}
+			},
+			setIframeHeight : function(iframe) {
+				$(iframe).height(0);
+				var h = $(iframe).contents().find('html').height();
+				$(iframe).height(h);
 			},
 			loadEditBlockCallback : function(res) {
 				if(res.success) {

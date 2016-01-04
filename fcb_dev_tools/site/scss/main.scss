@@ -1,19 +1,40 @@
 /*////////////////////////////
 //// Globals
 ////////////////////////////*/
+html {
+    height: 100%;
+}
+a {
+    color: #707da7;
+    &:hover {
+        color: #525d7b;
+    }
+}
 
 
 /*////////////////////////////
 //// Navigation
 ////////////////////////////*/
-.site-logo {
-    margin: 10px;
+.nav-wrap {
+    padding: 10px 0;
+    #site-logo img {
+        margin-bottom: 20px;
+    }
 }
 
 /*////////////////////////////
-//// Email Manage
+//// Home
 ////////////////////////////*/
 .home {
+    .bg {
+        background: url('../img/main-bg.jpg') center bottom no-repeat #ffffff;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
     .home-links {
         a {
             border: 1px solid #eeeeee;
