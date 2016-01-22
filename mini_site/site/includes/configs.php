@@ -4,7 +4,7 @@ date_default_timezone_set('America/Chicago');
 
 // Define Globals
 define("USE_DB", false);
-define("USE_AUTH", true);
+define("USE_AUTH", false);
 $protocol = (strpos($_SERVER['SERVER_PROTOCOL'],'https')?'https://':'http://');
 define("BASE_URL", $protocol.$_SERVER['HTTP_HOST']);
 define("APP_KEY", "1");
