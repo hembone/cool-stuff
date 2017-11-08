@@ -81,3 +81,7 @@ fabric.properties
 *.css.map
 
 # End of https://www.gitignore.io/api/sass,codekit,phpstorm
+.idea/cool-stuff.iml
+.idea/inspectionProfiles/
+.idea/modules.xml
+.idea/vcs.xml
