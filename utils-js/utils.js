@@ -36,15 +36,26 @@ var UTILS = {
 		var top = (screen.height/2)-(h/2);
 		return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 	},
+	
+	windowWidth : function() {
+        return window.innerWidth;
+    },
 
-	// requires jQuery
+    windowHeight : function() {
+        return window.innerHeight;
+    },
+
+///////////////////////
+// jQuery REQUIRED
+// Beyond this point
+///////////////////////
+
 	animateScrollTo : function(offset, speed) {
 		$('html, body').animate({
 			scrollTop: offset
 		}, speed);
 	},
 
-	// requires jQuery
 	resize : {
 		init : function(callback) {
 			if(typeof callback === 'function') {
