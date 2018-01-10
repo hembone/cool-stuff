@@ -44,6 +44,11 @@ var UTILS = {
     windowHeight : function() {
         return window.innerHeight;
     },
+	
+    urlSegment(e) {
+        let n = window.location.pathname.split('/');
+        return void 0 !== n[e] && n[e];
+    },
 
 ///////////////////////
 // jQuery REQUIRED
