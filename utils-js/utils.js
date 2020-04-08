@@ -55,9 +55,10 @@ var UTILS = {
 // Beyond this point
 ///////////////////////
 
-	animateScrollTo : function(offset, speed) {
+	scrollTo : function(selector, speed) {
+		let offset = $(selector).offset();
 		$('html, body').animate({
-			scrollTop: offset
+			scrollTop: offset.top
 		}, speed);
 	},
 

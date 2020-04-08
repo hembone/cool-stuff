@@ -2,13 +2,13 @@
 class theFramework {
 
 	function __construct() {
-		$this->bodyClasses = array();
-		$this->preloadStyles = array();
-		$this->styles = array();
+		$this->bodyClasses    = array();
+		$this->preloadStyles  = array();
+		$this->styles         = array();
 		$this->preloadScripts = array();
-		$this->scripts = array();
-		$this->page = 'home';
-		$this->template = 'default';
+		$this->scripts        = array();
+		$this->page           = 'home';
+		$this->template       = 'default';
 	}
 
 	public function init() {
@@ -24,7 +24,7 @@ class theFramework {
 		$filePath = 'pages/'.$this->page.'.php';
 		if(!file_exists($filePath)) {
 			$this->page = '404';
-			$filePath = 'pages/404.php';
+			$filePath   = 'pages/404.php';
 		}
 		ob_start();
 		include $filePath;
@@ -41,7 +41,7 @@ class theFramework {
 	}
 
 	private function isApi() {
-		if(isset($_REQUEST['key']) && $_REQUEST['key']==API_KEY) {
+		if(isset($_REQUEST['key']) && $_REQUEST['key'] == API_KEY) {
 			return true;
 		} else {
 			return false;
@@ -67,7 +67,7 @@ class theFramework {
 
 	public function printBodyClasses() {
 		$this->bodyClasses[] = $this->page;
-		$bodyClassStr = '';
+		$bodyClassStr        = '';
 		foreach($this->bodyClasses as $class) {
 			$bodyClassStr .= $class.' ';
 		}

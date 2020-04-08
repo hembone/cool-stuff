@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+
+        .overlay-active {
+            position: fixed;
+        }
+
+        .isi-overlay {
+        &.active {
+             position: absolute;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             background-color: rgba(0, 0, 0, 0.5);
+             z-index: 999;
+
+        .isi-tray-wrap {
+        .isi-tray-header {
+        .tray-toggle {
+        .see-more {
+            display: none;
+        }
+
+        .see-less {
+            display: block;
+        }
+        }
+        }
+
+        .isi-tray-content {
+            overflow: auto;
+        }
+        }
+        }
+
+        .isi-tray-wrap {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            z-index: 1000;
+            width: 100%;
+            background-color: #eeeeee;
+
+        .isi-tray-header {
+            background-color: #00a8ac;
+            padding: 6px 0;
+            color: #ffffff;
+
+        .tray-heading {
+            float: left;
+            text-transform: uppercase;
+            font-size: 20px;
+            font-weight: 600;
+
+        @media all and (max-width: 768px) {
+            margin-right: 48px;
+        }
+        }
+
+        .tray-toggle {
+            float: right;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 20px;
+            font-weight: 600;
+
+        .see-more {
+            display: block;
+
+        img {
+            height: 28px;
+            padding-left: 8px;
+
+        @media all and (max-width: 768px) {
+            position: absolute;
+            right: 10px;
+        }
+        }
+        }
+
+        .see-less {
+            display: none;
+
+        img {
+            height: 28px;
+            padding-left: 8px;
+
+        @media all and (max-width: 768px) {
+            position: absolute;
+            right: 10px;
+        }
+        }
+        }
+
+        .toggle-copy {
+        @media all and (max-width: 768px) {
+            display: none;
+        }
+        }
+        }
+        }
+
+        .isi-tray-content {
+            height: 100px;
+            overflow: hidden;
+            -webkit-transition: height 200ms ease;
+            -moz-transition: height 200ms ease;
+            -ms-transition: height 200ms ease;
+            -o-transition: height 200ms ease;
+            transition: height 200ms ease;
+
+        @media all and (max-width: 768px) {
+            height: 0;
+        }
+        }
+        }
+        }
+
+        .isi-page-wrap {
+            background-color: #eeeeee;
+            border-top: solid 5px #00a8ac;
+        }
+
+    </style>
+
+    <script>
+        function checkIsiTrayPosition() {
+            let topPageIsi = jQuery('.isi-page').offset().top;
+            let screenBottom = jQuery(window).scrollTop() + jQuery(window).innerHeight();
+            let isiTrayHeight = jQuery('.isi-tray-wrap').height();
+            if (screenBottom - isiTrayHeight > topPageIsi) {
+                jQuery('.isi-tray-wrap').fadeOut(200);
+            } else {
+                jQuery('.isi-tray-wrap').fadeIn(200);
+            }
+        }
+
+        jQuery(function() {
+            if ($('.isi-overlay').length) {
+                jQuery('.tray-toggle').on('click', function () {
+                    jQuery('body').toggleClass('overlay-active');
+                    jQuery('.isi-overlay').toggleClass('active');
+                    if (jQuery('body').hasClass('overlay-active')) {
+                        let newTrayHeight = jQuery(window).innerHeight() * 0.8;
+                        jQuery('.isi-tray-content').height(newTrayHeight);
+                    } else {
+                        jQuery('.isi-tray-content').scrollTop(0).height('');
+                    }
+                });
+
+                checkIsiTrayPosition();
+                jQuery(window).scroll(function () {
+                    checkIsiTrayPosition();
+                });
+            }
+        });
+    </script>
+
+</head>
+<body>
+
+<div class="isi-overlay">
+    <div class="isi-tray-wrap">
+        <div class="isi-tray-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="tray-heading">Indication And Important Safety Information</div>
+                        <div class="tray-toggle">
+                            <span class="see-more"><span class="toggle-copy">See More</span><img src="<?php echo get_stylesheet_directory_uri().'/images/plus-icon.png'; ?>"/></span>
+                            <span class="see-less"><span class="toggle-copy">Close</span><img src="<?php echo get_stylesheet_directory_uri().'/images/dash-icon.png'; ?>"/></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="isi-tray-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="isi-formatting"><?php echo $isiCopy; ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="isi-page-wrap">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="isi-page isi-formatting"><?php echo $isiCopy; ?></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
