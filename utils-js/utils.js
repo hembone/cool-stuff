@@ -36,30 +36,73 @@ var UTILS = {
 		var top = (screen.height/2)-(h/2);
 		return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 	},
-	
+
 	windowWidth : function() {
-        return window.innerWidth;
-    },
+		return window.innerWidth;
+	},
 
-    windowHeight : function() {
-        return window.innerHeight;
-    },
-	
-    urlSegment(e) {
-        let n = window.location.pathname.split('/');
-        return void 0 !== n[e] && n[e];
-    },
+	windowHeight : function() {
+		return window.innerHeight;
+	},
 
-///////////////////////
-// jQuery REQUIRED
-// Beyond this point
-///////////////////////
+	// var seg = UTILS.urlSegment('name');
+	urlSegment : function(e) {
+		let n = window.location.pathname.split('/');
+		return void 0 !== n[e] && n[e];
+	},
 
+	// var requestedParam = UTILS.urlParam('name');
+	// var allParams = UTILS.urlParam();
+	urlParam : function(param) {
+		let vars = {};
+		let parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+			function(m,key,value) {
+				vars[key] = value;
+			});
+		return (typeof vars[param] !== 'undefined') ? vars[param] : vars;
+	},
+
+	// UTILS.scrollTo('.contact-form', 200);
 	scrollTo : function(selector, speed) {
 		let offset = $(selector).offset();
 		$('html, body').animate({
 			scrollTop: offset.top
 		}, speed);
+	},
+
+	isScrolled : {
+		init : function(offset) {
+			UTILS.isScrolled.check(offset);
+			$(window).scroll(function() {
+				UTILS.isScrolled.check(offset);
+			});
+		},
+		check : function(offset) {
+			let os = 20;
+			if (offset) {
+				os = offset;
+			}
+			if ($(window).scrollTop() > os) {
+				$('.is-scrolled').addClass('scroll-active');
+			} else {
+				$('.is-scrolled').removeClass('scroll-active');
+			}
+		}
+	},
+
+	// Is the element visible in the viewport
+	isVisible : function(selector) {
+		$(window).scroll(function() {
+			var top_of_element    = $(selector).offset().top;
+			var bottom_of_element = $(selector).offset().top + $(selector).outerHeight();
+			var bottom_of_screen  = $(window).scrollTop() + $(window).innerHeight();
+			var top_of_screen     = $(window).scrollTop();
+			if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
+				return true;
+			} else {
+				return false;
+			}
+		});
 	},
 
 	resize : {
@@ -76,6 +119,11 @@ var UTILS = {
 				UTILS.resize.resizeTimeout = setTimeout(callback, 100);
 			});
 		}
+	},
+
+	matchHeight : function(fromSelector, toSelector) {
+		let selHeight = $(this).height();
+		$(toSelector).height(selHeight);
 	}
 
 };
