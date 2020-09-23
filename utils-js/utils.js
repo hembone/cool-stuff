@@ -45,10 +45,16 @@ var UTILS = {
 		return window.innerHeight;
 	},
 
-	// var seg = UTILS.urlSegment('name');
-	urlSegment : function(e) {
-		let n = window.location.pathname.split('/');
-		return void 0 !== n[e] && n[e];
+	// UTILS.hasUrlSegment('segment-name');
+	hasUrlSegment : function(segment) {
+		let res = false;
+		let segments = window.location.pathname.split('/');
+		jQuery.each(segments, function(idx, val) {
+			if (val === segment) {
+				res = true;
+			}
+		});
+		return res;
 	},
 
 	// var requestedParam = UTILS.urlParam('name');
@@ -64,8 +70,8 @@ var UTILS = {
 
 	// UTILS.scrollTo('.contact-form', 200);
 	scrollTo : function(selector, speed) {
-		let offset = $(selector).offset();
-		$('html, body').animate({
+		let offset = jQuery(selector).offset();
+		jQuery('html, body').animate({
 			scrollTop: offset.top
 		}, speed);
 	},
@@ -73,7 +79,7 @@ var UTILS = {
 	isScrolled : {
 		init : function(offset) {
 			UTILS.isScrolled.check(offset);
-			$(window).scroll(function() {
+			jQuery(window).scroll(function() {
 				UTILS.isScrolled.check(offset);
 			});
 		},
@@ -82,21 +88,21 @@ var UTILS = {
 			if (offset) {
 				os = offset;
 			}
-			if ($(window).scrollTop() > os) {
-				$('.is-scrolled').addClass('scroll-active');
+			if (jQuery(window).scrollTop() > os) {
+				jQuery('.is-scrolled').addClass('scroll-active');
 			} else {
-				$('.is-scrolled').removeClass('scroll-active');
+				jQuery('.is-scrolled').removeClass('scroll-active');
 			}
 		}
 	},
 
 	// Is the element visible in the viewport
 	isVisible : function(selector) {
-		$(window).scroll(function() {
-			var top_of_element    = $(selector).offset().top;
-			var bottom_of_element = $(selector).offset().top + $(selector).outerHeight();
-			var bottom_of_screen  = $(window).scrollTop() + $(window).innerHeight();
-			var top_of_screen     = $(window).scrollTop();
+		jQuery(window).scroll(function() {
+			var top_of_element    = jQuery(selector).offset().top;
+			var bottom_of_element = jQuery(selector).offset().top + jQuery(selector).outerHeight();
+			var bottom_of_screen  = jQuery(window).scrollTop() + jQuery(window).innerHeight();
+			var top_of_screen     = jQuery(window).scrollTop();
 			if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
 				return true;
 			} else {
@@ -114,7 +120,7 @@ var UTILS = {
 			}
 		},
 		set : function(callback) {
-			$(window).on('resize', function() {
+			jQuery(window).on('resize', function() {
 				clearTimeout(UTILS.resize.resizeTimeout);
 				UTILS.resize.resizeTimeout = setTimeout(callback, 100);
 			});
@@ -122,8 +128,21 @@ var UTILS = {
 	},
 
 	matchHeight : function(fromSelector, toSelector) {
-		let selHeight = $(this).height();
-		$(toSelector).height(selHeight);
+		let selHeight = jQuery(this).height();
+		jQuery(toSelector).height(selHeight);
+	},
+
+	//  Find all selected and match heights with the tallest one.
+	evenHeight : function(selector) {
+		let maxH = 0;
+		let test = 0;
+		jQuery(selector).each(function(idx) {
+			test = jQuery(this).innerHeight();
+			if (maxH < test) {
+				maxH = test;
+			}
+		});
+		jQuery(selector).css('min-height', maxH);
 	}
 
 };
