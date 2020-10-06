@@ -1,6 +1,53 @@
-/*===================
- Responsive iframe 16:9
-===================*/
+.btn-main span {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  padding: 8px 20px;
+  transition: scale 200ms ease;
+}
+.btn-main span:hover {
+  transform: scale(1.03);
+}
+.btn-main:hover {
+  text-decoration: none;
+}
+.btn-main.btn-center {
+  display: table;
+  margin: 0 auto;
+  text-align: center;
+}
+.btn-main span {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.btn-outline span {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  padding: 8px 20px;
+  transition: scale 200ms ease;
+}
+.btn-outline span:hover {
+  transform: scale(1.03);
+}
+.btn-outline:hover {
+  text-decoration: none;
+}
+.btn-outline.btn-center {
+  display: table;
+  margin: 0 auto;
+  text-align: center;
+}
+.btn-outline span {
+  border: 2px solid #000000;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 6px 18px;
+}
+
 .iframe-wrap {
   position: relative;
   padding-bottom: 56.25%;

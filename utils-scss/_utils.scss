@@ -1,6 +1,73 @@
-/*===================
- Responsive iframe 16:9
-===================*/
+@mixin bg-image($url) {
+    background-size: cover;
+    background-position: center;
+    background-image: url($url);
+}
+
+// @include gradient-text(#04508B, #38A237, 135);
+@mixin gradient-text($hex1, $hex2, $degree) {
+    background: $hex1;
+    background: linear-gradient($degree+deg, $hex1 0%, $hex2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    // IE10 and IE11 bypass
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        background: transparent;
+        color: $hex1;
+    }
+}
+
+@mixin btn-common {
+    span {
+        display: inline-block;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.4;
+        padding: 8px 20px;
+        transition: scale 200ms ease;
+
+        &:hover {
+            transform: scale(1.03);
+        }
+    }
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &.btn-center {
+        display: table;
+        margin: 0 auto;
+        text-align: center;
+    }
+}
+@mixin btn-main($bg-color, $font-color) {
+    @include btn-common;
+    span {
+        background-color: $bg-color;
+        color: $font-color;
+    }
+}
+@mixin btn-outline($bg-color, $font-color) {
+    @include btn-common;
+    span {
+        border: 2px solid $font-color;
+        background-color: $bg-color;
+        color: $font-color;
+        padding: 6px 18px;
+    }
+}
+// <a href="" class="btn-main btn-center"><span>Learn More</span></a>
+.btn-main {
+    @include btn-main(#ffffff, #000000);
+}
+// <a href="" class="btn-outline btn-center"><span>Learn More</span></a>
+.btn-outline {
+    @include btn-outline(#ffffff, #000000);
+}
+
+// responsive iframe
 .iframe-wrap {
     position: relative;
     padding-bottom: 56.25%;
@@ -25,25 +92,5 @@
 
     &:hover {
         transform: scale(1.03);
-    }
-}
-
-@mixin bg-image($url) {
-    background-size: cover;
-    background-position: center;
-    background-image: url($url);
-}
-
-// @include grad-text(#04508B, #38A237, 135);
-@mixin grad-text($hex1, $hex2, $degree) {
-    background: $hex1;
-    background: linear-gradient($degree+deg, $hex1 0%, $hex2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    // IE10 and IE11 bypass
-    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-        background: transparent;
-        color: $hex1;
     }
 }
