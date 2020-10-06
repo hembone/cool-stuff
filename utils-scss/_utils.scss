@@ -21,7 +21,7 @@
 }
 
 .hover-zoom {
-    transition: all 400ms ease;
+    transition: transform 400ms ease;
 
     &:hover {
         transform: scale(1.03);
@@ -32,4 +32,18 @@
     background-size: cover;
     background-position: center;
     background-image: url($url);
+}
+
+// @include grad-text(#04508B, #38A237, 135);
+@mixin grad-text($hex1, $hex2, $degree) {
+    background: $hex1;
+    background: linear-gradient($degree+deg, $hex1 0%, $hex2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    // IE10 and IE11 bypass
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        background: transparent;
+        color: $hex1;
+    }
 }

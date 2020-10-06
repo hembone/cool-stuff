@@ -20,7 +20,7 @@
 }
 
 .hover-zoom {
-  transition: all 400ms ease;
+  transition: transform 400ms ease;
 }
 .hover-zoom:hover {
   transform: scale(1.03);
